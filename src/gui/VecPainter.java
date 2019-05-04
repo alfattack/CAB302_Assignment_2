@@ -1,11 +1,9 @@
 package gui;
 
+import graphicsManage.Rectangle;
+
 import javax.swing.*;
 import java.awt.*;
-
-import graphicsManage.DrawableVector;
-import graphicsManage.Line;
-import graphicsManage.Rectangle;
 
 public class VecPainter {
     public static void main(String[] args) {
@@ -16,11 +14,9 @@ public class VecPainter {
         window.setMinimumSize(new Dimension(100, 100));
 
         Rectangle rect = new Rectangle(0,0,0.5,0.5, false, Color.MAGENTA);
-        DrawableVector line = new Line(0.2,0.3,0.7,0.5, Color.GREEN);
 
         MyCanvas myCanvas = MyCanvas.getCanvas();
         myCanvas.addComponent(rect);
-        myCanvas.addComponent(line);
         window.add(myCanvas);
         window.setVisible(true);
     }

@@ -1,6 +1,7 @@
 package gui;
 
 import graphicsManage.DrawableVector;
+import graphicsManage.Rectangle;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,44 +11,55 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
+
 public class MyCanvas extends JComponent implements ActionListener {
+    /**
+     * The GUI component for the drawing Canvas. Singleton design pattern for a shared instance across application.
+     */
 
     private static MyCanvas instance;
 
     // indicates whether a user command is occuring.
     private boolean mouse_select_location;
 
+
+    private DrawableVector currentInstruction;
+
     ArrayList<DrawableVector> instructions = new ArrayList<>();
 
-    // stores the click location
-    private int screen_x = -1;
-    private int screen_y = -1;
-
-    // stores how many times the mouse has been pressed on screen. (2 presses indicates completed action).
-    private int numberPresses = 0;
+    // stores the initial click location
+    private int click_x = -1;
+    private int click_y = -1;
 
     private MyCanvas(){
-        setSize(30,30);
-        setBackground(new Color(255,255,255));
-        setVisible(true);
 
-        this.addMouseListener(new MouseAdapter() {
+        super.setVisible(true);
+
+        MouseAdapter mouse = new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                screen_x = e.getX();
-                screen_y = e.getX();
-                System.out.println("mouse location: "+screen_x);
-                System.out.println("width: "+getWidth());
+                mouse_select_location = true;
+                click_x = e.getX();
+                click_y = e.getY();
+
+                currentInstruction = new Rectangle(click_x,click_y,click_x,click_y,false,Color.BLACK);
+                instance.repaint();
+                instance.addComponent(currentInstruction);
             }
 
             @Override
-            public void mouseExited(MouseEvent e) {
-                screen_x=-1;
-                screen_y=-1;
-                System.out.println(screen_x);
-                mouse_select_location=false;
+            public void mouseDragged(MouseEvent e) {
+                currentInstruction.setCordinates(click_x,click_y,e.getX(),e.getY());
+                instance.repaint();
             }
-        });
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                currentInstruction=null;
+            }
+        };
+        this.addMouseListener(mouse);
+        this.addMouseMotionListener(mouse);
     }
 
     public static MyCanvas getCanvas(){
@@ -65,11 +77,6 @@ public class MyCanvas extends JComponent implements ActionListener {
         for (DrawableVector instruction : instructions){
             instruction.draw(g);
         }
-    }
-
-    @Override
-    public void repaint() {
-        super.repaint();
     }
 
     @Override
