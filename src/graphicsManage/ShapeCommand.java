@@ -1,9 +1,6 @@
 package graphicsManage;
 
-public enum Command {
-    FILL,
-    FILL_OFF,
-    PEN,
+public enum ShapeCommand {
     LINE,
     RECTANGLE,
     ELIPSES,
