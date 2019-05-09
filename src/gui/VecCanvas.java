@@ -3,7 +3,7 @@ package gui;
 import graphicsManage.DrawableVector;
 import graphicsManage.FixedPointVector;
 import graphicsManage.Polygon;
-import graphicsManage.ShapeCommand;
+import graphicsManage.VectorCommand;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,7 +11,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
-import static graphicsManage.ShapeCommand.*;
+import static graphicsManage.VectorCommand.*;
 
 
 public class VecCanvas extends JComponent {
@@ -24,8 +24,7 @@ public class VecCanvas extends JComponent {
 
     // Instruction that is currently being manipulated through GUI.
     private DrawableVector currentInstruction;
-
-    ArrayList<DrawableVector> instructions = new ArrayList<>();
+    private ArrayList<DrawableVector> instructions = new ArrayList<>();
 
     // stores the initial click location
     private int click_x = -1;
@@ -35,10 +34,6 @@ public class VecCanvas extends JComponent {
      * VecCanvas constructor. Creates a new VecCanvas object. This is a private constructor as only one instance is created.
      */
     private VecCanvas(){
-
-        super.setVisible(true);
-        super.setOpaque(false);
-
         MouseAdapter mouse = new MouseAdapter() {
             boolean polygon_initialised = false;
             @Override
@@ -57,17 +52,17 @@ public class VecCanvas extends JComponent {
                 switch(currentInstruction.getCommand()){
                     case POINT:
                         instance.addComponent(currentInstruction);
-                        ((FixedPointVector) currentInstruction).setCoordinates(click_x,click_y,click_x,click_y);
+                        ((FixedPointVector) currentInstruction).setCoordinates(click_x,click_y,click_x,click_y,getWidth(),getHeight());
                         break;
                     case POLYGON:
                         if (!polygon_initialised){
                             instructions.add(currentInstruction);
                         }
-                        ((Polygon)currentInstruction).addCoordinates(e.getX(),e.getY());
+                        ((Polygon)currentInstruction).addCoordinates(e.getX(),e.getY(),getWidth(),getHeight());
                         break;
 
                     default:
-                        ((FixedPointVector)currentInstruction).setCoordinates(click_x,click_y,e.getX(),e.getY());
+                        ((FixedPointVector)currentInstruction).setCoordinates(click_x,click_y,e.getX(),e.getY(),getWidth(),getHeight());
                         instructions.add(currentInstruction);
                 }
                 instance.repaint();
@@ -77,10 +72,10 @@ public class VecCanvas extends JComponent {
             public void mouseDragged(MouseEvent e) {
                 if (currentInstruction == null) return;
 
-                ShapeCommand cmd = currentInstruction.getCommand();
+                VectorCommand cmd = currentInstruction.getCommand();
 
                 if ((cmd==RECTANGLE)||(cmd==ELIPSES)||(cmd==LINE)){
-                    ((FixedPointVector)currentInstruction).setCoordinates(click_x,click_y,e.getX(),e.getY());
+                    ((FixedPointVector)currentInstruction).setCoordinates(click_x,click_y,e.getX(),e.getY(),getWidth(),getHeight());
                     instance.repaint();
                 }
             }
@@ -91,7 +86,7 @@ public class VecCanvas extends JComponent {
                 if (currentInstruction == null) return;
 
                 if (currentInstruction.getCommand() != POLYGON)
-                    currentInstruction=null;
+                    currentInstruction=currentInstruction.returnCopy();
             }
         };
         this.addMouseListener(mouse);
@@ -130,12 +125,26 @@ public class VecCanvas extends JComponent {
         }
     }
 
+    public void clear(){
+        instructions.clear();
+        super.repaint();
+    }
+
     /**
      *
      * @param draw
      */
     public void addComponent(DrawableVector draw) {
         instructions.add(draw);
+    }
+
+
+    public void setInstructions(ArrayList<DrawableVector> instructions){
+        this.instructions=instructions;
+    }
+
+    public ArrayList<DrawableVector> getInstructions(){
+        return instructions;
     }
 
     /**
@@ -148,7 +157,7 @@ public class VecCanvas extends JComponent {
         g.fillRect(0,0,super.getWidth(),super.getHeight());
 
         for (DrawableVector instruction : instructions){
-            instruction.draw(g);
+            instruction.draw(g, getWidth(), getHeight());
         }
     }
 }

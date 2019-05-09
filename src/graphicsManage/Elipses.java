@@ -4,29 +4,24 @@ import java.awt.*;
 
 public class Elipses extends FixedPointVector {
 
-    private boolean fill;
-    private Color fillColour = Color.MAGENTA;
+    private Color fillColour = null;
+    private boolean fill = false;
 
     public Elipses(double x1, double y1, double x2, double y2, boolean fill, Color color){
         super(x1,y1,x2,y2,color);
-        this.fill=fill;
     }
 
-    public Elipses(int x1, int y1, int x2, int y2, boolean fill, Color color){
-        super(x1,y1,x2,y2,color);
-        this.fill=fill;
+    public Elipses(Color color, Color fillColour, boolean fill){
+        super.color=color;
+        fillColour=fillColour;
     }
 
     @Override
-    public void draw(Graphics g) {
-        int width = super.canvas.getWidth();
-        int height = super.canvas.getHeight();
+    public void draw(Graphics g, int width, int height) {
         int x1_pixel = (int) Math.round(super.x1*width);
         int x2_pixel = (int) Math.round(super.x2*width);
         int y1_pixel = (int) Math.round(super.y1*height);
         int y2_pixel = (int) Math.round(super.y2*height);
-
-
         g.setColor(this.color);
 
         if (fill){
@@ -37,7 +32,12 @@ public class Elipses extends FixedPointVector {
     }
 
     @Override
-    public ShapeCommand getCommand() {
-        return ShapeCommand.ELIPSES;
+    public VectorCommand getCommand() {
+        return VectorCommand.ELIPSES;
+    }
+
+    @Override
+    public DrawableVector returnCopy() {
+        return new Elipses(super.color, fillColour, fill);
     }
 }

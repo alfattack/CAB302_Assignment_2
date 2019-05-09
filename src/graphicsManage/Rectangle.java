@@ -12,15 +12,14 @@ public class Rectangle extends FixedPointVector {
         this.fill=fill;
     }
 
-    public Rectangle(int x1, int y1, int x2, int y2, boolean fill, Color color){
-        super(x1,y1,x2,y2,color);
+    public Rectangle(Color color, Color fillColour, boolean fill){
+        super.color=color;
+        this.fillColour = fillColour;
         this.fill=fill;
     }
 
     @Override
-    public void draw(Graphics g) {
-        int width = super.canvas.getWidth();
-        int height = super.canvas.getHeight();
+    public void draw(Graphics g, int width, int height) {
         int x1_pixel = (int) Math.round(super.x1*width);
         int x2_pixel = (int) Math.round(super.x2*width);
         int y1_pixel = (int) Math.round(super.y1*height);
@@ -37,7 +36,12 @@ public class Rectangle extends FixedPointVector {
     }
 
     @Override
-    public ShapeCommand getCommand() {
-        return ShapeCommand.RECTANGLE;
+    public VectorCommand getCommand() {
+        return VectorCommand.RECTANGLE;
+    }
+
+    @Override
+    public DrawableVector returnCopy() {
+        return new Rectangle(super.color,fillColour,fill);
     }
 }

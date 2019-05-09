@@ -10,8 +10,8 @@ public class Point extends FixedPointVector {
      * @param color
      */
 
-    public Point(int x, int y, Color color){
-        super(x,y,x,y,color);
+    public Point(Color color){
+        super.color=color;
     }
 
     public Point(double x, double y, Color color){
@@ -20,9 +20,7 @@ public class Point extends FixedPointVector {
 
 
     @Override
-    public void draw(Graphics g) {
-        int width = super.canvas.getWidth();
-        int height = super.canvas.getHeight();
+    public void draw(Graphics g, int width, int height) {
         int x1_pixel = (int) Math.round(super.x1*width);
         int y1_pixel = (int) Math.round(super.y1*height);
         g.setColor(super.color);
@@ -30,7 +28,12 @@ public class Point extends FixedPointVector {
     }
 
     @Override
-    public ShapeCommand getCommand() {
+    public VectorCommand getCommand() {
         return null;
+    }
+
+    @Override
+    public DrawableVector returnCopy() {
+        return new Point(-1,-1,super.color);
     }
 }

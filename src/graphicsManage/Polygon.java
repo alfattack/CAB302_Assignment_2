@@ -1,25 +1,29 @@
 package graphicsManage;
 
 import java.awt.*;
-import java.util.ArrayList;
 
 public class Polygon implements DrawableVector {
 //    ArrayList<double> x_points;
 //    ArrayList<double> y_points;
 
     @Override
-    public void draw(Graphics g) {
+    public void draw(Graphics g, int width, int height) {
         Graphics2D g2d = (Graphics2D) g;
 
         //g2d.fillPolygon(x_points, y_points, x_points.size());
     }
 
     @Override
-    public ShapeCommand getCommand() {
-        return ShapeCommand.POLYGON;
+    public VectorCommand getCommand() {
+        return VectorCommand.POLYGON;
     }
 
-    public void addCoordinates(int x, int y){
+    @Override
+    public DrawableVector returnCopy() {
+        return null;
+    }
+
+    public void addCoordinates(int x, int y, int width, int height){
 
     }
 

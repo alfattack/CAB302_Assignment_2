@@ -1,9 +1,11 @@
 package graphicsManage;
 
-public enum ShapeCommand {
+public enum VectorCommand {
     LINE,
     RECTANGLE,
     ELIPSES,
     POINT,
-    POLYGON
+    POLYGON,
+    FILL,
+    COLOR,
 }

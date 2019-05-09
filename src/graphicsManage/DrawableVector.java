@@ -4,7 +4,9 @@ import java.awt.*;
 
 public interface DrawableVector {
 
-    void draw(Graphics g);
+    void draw(Graphics g, int width, int height);
 
-    ShapeCommand getCommand();
+    VectorCommand getCommand();
+
+    DrawableVector returnCopy();
 }
