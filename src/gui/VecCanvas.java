@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import static graphicsManage.VectorCommand.*;
 
 
-public class VecCanvas extends JComponent {
+public class VecCanvas extends JPanel {
     /**
      * The GUI component for the drawing Canvas. Singleton design pattern for a shared instance across application.
      */
@@ -34,61 +34,7 @@ public class VecCanvas extends JComponent {
      * VecCanvas constructor. Creates a new VecCanvas object. This is a private constructor as only one instance is created.
      */
     private VecCanvas(){
-        MouseAdapter mouse = new MouseAdapter() {
-            boolean polygon_initialised = false;
-            @Override
-            public void mousePressed(MouseEvent e) {
-                System.out.println("Test");
-                if (currentInstruction == null) return;
-
-                // right click and current instruction is polygon.
-                if ((e.getButton() == MouseEvent.BUTTON3) && (currentInstruction.getCommand()==POLYGON)){
-                    ((Polygon)currentInstruction).finishShape();
-                }
-
-                click_x = e.getX();
-                click_y = e.getY();
-
-                switch(currentInstruction.getCommand()){
-                    case POINT:
-                        instance.addComponent(currentInstruction);
-                        ((FixedPointVector) currentInstruction).setCoordinates(click_x,click_y,click_x,click_y,getWidth(),getHeight());
-                        break;
-                    case POLYGON:
-                        if (!polygon_initialised){
-                            instructions.add(currentInstruction);
-                        }
-                        ((Polygon)currentInstruction).addCoordinates(e.getX(),e.getY(),getWidth(),getHeight());
-                        break;
-
-                    default:
-                        ((FixedPointVector)currentInstruction).setCoordinates(click_x,click_y,e.getX(),e.getY(),getWidth(),getHeight());
-                        instructions.add(currentInstruction);
-                }
-                instance.repaint();
-            }
-
-            @Override
-            public void mouseDragged(MouseEvent e) {
-                if (currentInstruction == null) return;
-
-                VectorCommand cmd = currentInstruction.getCommand();
-
-                if ((cmd==RECTANGLE)||(cmd==ELIPSES)||(cmd==LINE)){
-                    ((FixedPointVector)currentInstruction).setCoordinates(click_x,click_y,e.getX(),e.getY(),getWidth(),getHeight());
-                    instance.repaint();
-                }
-            }
-
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                if (currentInstruction == null) return;
-
-                if (currentInstruction.getCommand() != POLYGON)
-                    currentInstruction=currentInstruction.returnCopy();
-            }
-        };
+        MouseAdapter mouse = new CanvasMouse();
         this.addMouseListener(mouse);
         this.addMouseMotionListener(mouse);
     }
@@ -158,6 +104,82 @@ public class VecCanvas extends JComponent {
 
         for (DrawableVector instruction : instructions){
             instruction.draw(g, getWidth(), getHeight());
+        }
+    }
+
+
+    @Override
+    public Dimension getPreferredSize() {
+        Dimension size = super.getPreferredSize();
+
+        double w = size.getWidth();
+        double h = size.getHeight();
+
+        if (w > h){
+            size.setSize(h,h);
+        }
+        else if (h > w){
+            size.setSize(w,w);
+        }
+        return size;
+    }
+
+    /**
+     * Mouse that interacts with the canvas.
+     */
+    private class CanvasMouse extends MouseAdapter{
+        boolean polygon_initialised = false;
+        @Override
+        public void mousePressed(MouseEvent e) {
+            System.out.println("Test");
+            if (currentInstruction == null) return;
+
+            // right click and current instruction is polygon.
+            if ((e.getButton() == MouseEvent.BUTTON3) && (currentInstruction.getCommand()==POLYGON)){
+                ((Polygon)currentInstruction).finishShape();
+            }
+
+            click_x = e.getX();
+            click_y = e.getY();
+
+            switch(currentInstruction.getCommand()){
+                case POINT:
+                    instance.addComponent(currentInstruction);
+                    ((FixedPointVector) currentInstruction).setCoordinates(click_x,click_y,click_x,click_y,getWidth(),getHeight());
+                    break;
+                case POLYGON:
+                    if (!polygon_initialised){
+                        instructions.add(currentInstruction);
+                    }
+                    ((Polygon)currentInstruction).addCoordinates(e.getX(),e.getY(),getWidth(),getHeight());
+                    break;
+
+                default:
+                    ((FixedPointVector)currentInstruction).setCoordinates(click_x,click_y,e.getX(),e.getY(),getWidth(),getHeight());
+                    instructions.add(currentInstruction);
+            }
+            instance.repaint();
+        }
+
+        @Override
+        public void mouseDragged(MouseEvent e) {
+            if (currentInstruction == null) return;
+
+            VectorCommand cmd = currentInstruction.getCommand();
+
+            if ((cmd==RECTANGLE)||(cmd==ELIPSES)||(cmd==LINE)){
+                ((FixedPointVector)currentInstruction).setCoordinates(click_x,click_y,e.getX(),e.getY(),getWidth(),getHeight());
+                instance.repaint();
+            }
+        }
+
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            if (currentInstruction == null) return;
+
+            if (currentInstruction.getCommand() != POLYGON)
+                currentInstruction=currentInstruction.returnCopy();
         }
     }
 }

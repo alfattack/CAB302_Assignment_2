@@ -13,26 +13,33 @@ class VecButtonPanel extends JPanel {
 
     private VecCanvas canvas;
     private JButton rectangle;
+    private JButton rectangleFill;
     private JButton elipses;
+    private JButton elipsesFill;
     private JButton line;
 
     VecButtonPanel(){
         setLayout(new FlowLayout());
         canvas = VecCanvas.getCanvas();
-        rectangle = new JButton("Rectangle");
-        rectangle.setBackground(Color.RED);
-        rectangle.addActionListener(new ButtonCommandListener());
+
+        rectangle = createButton(new ImageIcon("src/gui/icons/rectangleBlank.png"));
+        rectangleFill = createButton(new ImageIcon("src/gui/icons/rectangleFill.png"));
+        elipses = createButton(new ImageIcon("src/gui/icons/elipsesBlank.png"));
+        elipsesFill = createButton(new ImageIcon("src/gui/icons/elipsesFill.png"));
+        line = createButton(new ImageIcon("src/gui/icons/line.png"));
+
         add(rectangle);
-
-
-        elipses = new JButton(new ImageIcon("src/gui/icons/elipsesBlank.png"));
-        elipses.addActionListener(new ButtonCommandListener());
+        add(rectangleFill);
         add(elipses);
-
-        line = new JButton("line");
-        line.setBackground(Color.GREEN);
-        line.addActionListener(new ButtonCommandListener());
+        add(elipsesFill);
         add(line);
+    }
+
+    public JButton createButton(ImageIcon icon){
+        JButton var = new JButton(icon);
+        var.setBackground(Color.WHITE);
+        var.addActionListener(new ButtonCommandListener());
+        return var;
     }
 
 
@@ -48,6 +55,10 @@ class VecButtonPanel extends JPanel {
             }
             if (source == line){
                 canvas.updateCurrentInstruction(new Line(Color.BLACK));
+            }
+
+            if (source == elipsesFill){
+                Color newColor = JColorChooser.showDialog(null, "Choose a color", Color.RED);
             }
         }
     }

@@ -3,10 +3,9 @@ package graphicsManage;
 import java.awt.*;
 
 public class Point extends FixedPointVector {
+
     /**
      *
-     * @param x
-     * @param y
      * @param color
      */
 

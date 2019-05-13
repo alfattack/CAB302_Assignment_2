@@ -20,22 +20,25 @@ public class VecPainterMenuBar extends JMenuBar {
     private VecCanvas canvas;
     private JMenu menu;
     private VecFileChooser chooser;
+    private MenuListener menuListener;
 
     VecPainterMenuBar(){
 
         chooser = new VecFileChooser();
+        menuListener = new MenuListener();
 
         menu = new JMenu("File");
         canvas = VecCanvas.getCanvas();
 
         loadFile = new JMenuItem("Load");
-        loadFile.addActionListener(new MenuListener());
+        loadFile.addActionListener(menuListener);
         menu.add(loadFile);
 
         saveFile = new JMenuItem("Save");
         menu.add(saveFile);
 
         clear = new JMenuItem("Clear");
+        clear.addActionListener(menuListener);
         menu.add(clear);
 
         add(menu);
@@ -74,6 +77,9 @@ public class VecPainterMenuBar extends JMenuBar {
             Component source = (Component) e.getSource();
             if (source == loadFile) {
                 loadFile();
+            }
+            if (source == clear){
+                canvas.clear();
             }
         }
     }
