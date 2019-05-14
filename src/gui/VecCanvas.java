@@ -107,23 +107,6 @@ public class VecCanvas extends JPanel {
         }
     }
 
-
-    @Override
-    public Dimension getPreferredSize() {
-        Dimension size = super.getPreferredSize();
-
-        double w = size.getWidth();
-        double h = size.getHeight();
-
-        if (w > h){
-            size.setSize(h,h);
-        }
-        else if (h > w){
-            size.setSize(w,w);
-        }
-        return size;
-    }
-
     /**
      * Mouse that interacts with the canvas.
      */

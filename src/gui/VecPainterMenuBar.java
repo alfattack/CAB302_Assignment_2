@@ -17,8 +17,10 @@ public class VecPainterMenuBar extends JMenuBar {
     private JMenuItem loadFile;
     private JMenuItem saveFile;
     private JMenuItem clear;
+    private JMenuItem undo;
     private VecCanvas canvas;
-    private JMenu menu;
+    private JMenu file;
+    private JMenu edit;
     private VecFileChooser chooser;
     private MenuListener menuListener;
 
@@ -27,21 +29,45 @@ public class VecPainterMenuBar extends JMenuBar {
         chooser = new VecFileChooser();
         menuListener = new MenuListener();
 
-        menu = new JMenu("File");
+        file = createFileMenu();
+        edit = createEditMenu();
         canvas = VecCanvas.getCanvas();
+
+        add(file);
+        add(edit);
+    }
+
+
+    JMenu createFileMenu(){
+        JMenu var = new JMenu("File");
 
         loadFile = new JMenuItem("Load");
         loadFile.addActionListener(menuListener);
-        menu.add(loadFile);
+        var.add(loadFile);
 
         saveFile = new JMenuItem("Save");
-        menu.add(saveFile);
+        var.add(saveFile);
 
         clear = new JMenuItem("Clear");
         clear.addActionListener(menuListener);
-        menu.add(clear);
+        var.add(clear);
 
-        add(menu);
+        return var;
+    }
+
+    JMenu createEditMenu(){
+        JMenu var = new JMenu("Edit");
+        canvas = VecCanvas.getCanvas();
+
+        clear = new JMenuItem("Clear");
+        clear.addActionListener(menuListener);
+        var.add(clear);
+
+        undo = new JMenuItem("Undo");
+        undo.addActionListener(menuListener);
+        var.add(undo);
+
+        return var;
     }
 
     private class MenuListener implements ActionListener {
@@ -80,6 +106,11 @@ public class VecPainterMenuBar extends JMenuBar {
             }
             if (source == clear){
                 canvas.clear();
+            }
+
+            if (source == undo ){
+                canvas.undo();
+                canvas.repaint();
             }
         }
     }

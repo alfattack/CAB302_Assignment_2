@@ -17,6 +17,8 @@ class VecButtonPanel extends JPanel {
     private JButton elipses;
     private JButton elipsesFill;
     private JButton line;
+    private JButton polygon;
+    private JButton polygonFill;
 
     VecButtonPanel(){
         setLayout(new FlowLayout());
@@ -27,11 +29,16 @@ class VecButtonPanel extends JPanel {
         elipses = createButton(new ImageIcon("src/gui/icons/elipsesBlank.png"));
         elipsesFill = createButton(new ImageIcon("src/gui/icons/elipsesFill.png"));
         line = createButton(new ImageIcon("src/gui/icons/line.png"));
+        polygon=createButton(new ImageIcon("src/gui/icons/polygon.png"));
+        polygonFill=createButton(new ImageIcon("src/gui/icons/polygonFill.png"));
+
 
         add(rectangle);
         add(rectangleFill);
         add(elipses);
         add(elipsesFill);
+        add(polygon);
+        add(polygonFill);
         add(line);
     }
 

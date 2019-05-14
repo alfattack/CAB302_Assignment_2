@@ -31,7 +31,6 @@ public class GUI extends JFrame implements Runnable{
 
         canvasPanel = createCanvasPanel();
         add(canvasPanel, BorderLayout.CENTER);
-
         JPanel buttonPanel = new VecButtonPanel();
 
         add(buttonPanel, BorderLayout.SOUTH);
@@ -46,6 +45,12 @@ public class GUI extends JFrame implements Runnable{
         });
     }
 
+
+    JPanel createPanel(Color c){
+        JPanel var = new JPanel();
+        var.setBackground(c);
+        return var;
+    }
     /**
      * Creates Panel which houses the canvas.
      * @return
