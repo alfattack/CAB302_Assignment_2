@@ -3,19 +3,20 @@ package graphicsManage;
 import java.awt.*;
 
 public class Rectangle extends FixedPointVector {
-    private boolean fill;
 
-    private Color fillColour = Color.BLUE;
+    private Color fillColour = null;
+    private boolean fill = false;
 
-    public Rectangle(double x1, double y1, double x2, double y2, boolean fill, Color color){
+    public Rectangle(double x1, double y1, double x2, double y2, boolean fill, Color color, Color fillColour){
         super(x1,y1,x2,y2,color);
         this.fill=fill;
+        this.fillColour=fillColour;
     }
 
-    public Rectangle(Color color, Color fillColour, boolean fill){
-        super.color=color;
+    public Rectangle(Color color, Color fillColour, boolean fill) {
+        super.color = color;
         this.fillColour = fillColour;
-        this.fill=fill;
+        this.fill = fill;
     }
 
     @Override
@@ -25,14 +26,13 @@ public class Rectangle extends FixedPointVector {
         int y1_pixel = (int) Math.round(super.y1*height);
         int y2_pixel = (int) Math.round(super.y2*height);
 
-        Graphics2D g2d = (Graphics2D) g;
+        if (fill) {
+            g.setColor(fillColour);
+            g.fillRect(x1_pixel, y1_pixel, x2_pixel - x1_pixel, y2_pixel - y1_pixel);
+        }
 
-        if (fill)
-            g2d.setColor(fillColour);
-            g2d.fillRect(x1_pixel,y1_pixel,x2_pixel-x1_pixel,y2_pixel-y1_pixel);
-
-        g2d.setColor(super.color);
-        g2d.drawRect(x1_pixel,y1_pixel,x2_pixel-x1_pixel,y2_pixel-y1_pixel);
+        g.setColor(color);
+        g.drawRect(x1_pixel,y1_pixel,x2_pixel-x1_pixel,y2_pixel-y1_pixel);
     }
 
     @Override
@@ -42,6 +42,6 @@ public class Rectangle extends FixedPointVector {
 
     @Override
     public DrawableVector returnCopy() {
-        return new Rectangle(super.color,fillColour,fill);
+        return new Rectangle(super.color, fillColour, fill);
     }
 }

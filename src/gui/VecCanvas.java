@@ -53,7 +53,7 @@ public class VecCanvas extends JPanel {
      *
      * @param draw
      */
-    public void updateCurrentInstruction(FixedPointVector draw){
+    public void updateCurrentInstruction(DrawableVector draw){
         currentInstruction=draw;
     }
 
@@ -105,45 +105,56 @@ public class VecCanvas extends JPanel {
         for (DrawableVector instruction : instructions){
             instruction.draw(g, getWidth(), getHeight());
         }
+        if (currentInstruction != null){
+            currentInstruction.draw(g, getWidth(), getHeight());
+        }
     }
 
     /**
      * Mouse that interacts with the canvas.
      */
     private class CanvasMouse extends MouseAdapter{
-        boolean polygon_initialised = false;
         @Override
-        public void mousePressed(MouseEvent e) {
-            System.out.println("Test");
-            if (currentInstruction == null) return;
 
-            // right click and current instruction is polygon.
-            if ((e.getButton() == MouseEvent.BUTTON3) && (currentInstruction.getCommand()==POLYGON)){
-                ((Polygon)currentInstruction).finishShape();
-            }
+        /**
+         *
+         */
+        public void mousePressed(MouseEvent e) {
+            if (currentInstruction == null) return;
 
             click_x = e.getX();
             click_y = e.getY();
 
-            switch(currentInstruction.getCommand()){
-                case POINT:
-                    instance.addComponent(currentInstruction);
-                    ((FixedPointVector) currentInstruction).setCoordinates(click_x,click_y,click_x,click_y,getWidth(),getHeight());
-                    break;
-                case POLYGON:
-                    if (!polygon_initialised){
-                        instructions.add(currentInstruction);
-                    }
-                    ((Polygon)currentInstruction).addCoordinates(e.getX(),e.getY(),getWidth(),getHeight());
-                    break;
-
-                default:
-                    ((FixedPointVector)currentInstruction).setCoordinates(click_x,click_y,e.getX(),e.getY(),getWidth(),getHeight());
+            // right click and current instruction is polygon.
+            if ((e.getButton() == MouseEvent.BUTTON3) && (currentInstruction.getCommand()==POLYGON)){
+                if (((Polygon)currentInstruction).isValid())
+                {
+                    ((Polygon)currentInstruction).finishShape();
                     instructions.add(currentInstruction);
+                    currentInstruction=null;
+                }
+            }
+            else{
+                switch(currentInstruction.getCommand()){
+                    case POINT:
+                        ((FixedPointVector) currentInstruction).setCoordinates(click_x,click_y,click_x,click_y,getWidth(),getHeight());
+                        instance.addComponent(currentInstruction);
+                        break;
+                    case POLYGON:
+                        ((Polygon)currentInstruction).addCoordinates(e.getX(),e.getY(),getWidth(),getHeight());
+                        break;
+                    default:
+                        ((FixedPointVector)currentInstruction).setCoordinates(click_x,click_y,e.getX(),e.getY(),getWidth(),getHeight());
+                        break;
+                }
             }
             instance.repaint();
         }
 
+        /**
+         *
+         * @param e
+         */
         @Override
         public void mouseDragged(MouseEvent e) {
             if (currentInstruction == null) return;
@@ -156,13 +167,18 @@ public class VecCanvas extends JPanel {
             }
         }
 
-
+        /**
+         *
+         * @param e
+         */
         @Override
         public void mouseReleased(MouseEvent e) {
             if (currentInstruction == null) return;
 
-            if (currentInstruction.getCommand() != POLYGON)
+            if (currentInstruction.getCommand() != POLYGON){
+                instructions.add(currentInstruction);
                 currentInstruction=currentInstruction.returnCopy();
+            }
         }
     }
 }

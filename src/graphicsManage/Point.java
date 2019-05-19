@@ -22,13 +22,17 @@ public class Point extends FixedPointVector {
     public void draw(Graphics g, int width, int height) {
         int x1_pixel = (int) Math.round(super.x1*width);
         int y1_pixel = (int) Math.round(super.y1*height);
-        g.setColor(super.color);
-        g.drawLine(x1_pixel,y1_pixel,x1_pixel,y1_pixel);
+        Graphics2D g2d = (Graphics2D) g;
+
+        g2d.setColor(super.color);
+
+        g2d.setStroke(new BasicStroke(2));
+        g2d.drawLine(x1_pixel,y1_pixel,x1_pixel,y1_pixel);
     }
 
     @Override
     public VectorCommand getCommand() {
-        return null;
+        return VectorCommand.POINT;
     }
 
     @Override

@@ -36,7 +36,6 @@ public class GUI extends JFrame implements Runnable{
         add(buttonPanel, BorderLayout.SOUTH);
         setJMenuBar(new VecPainterMenuBar());
 
-
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
