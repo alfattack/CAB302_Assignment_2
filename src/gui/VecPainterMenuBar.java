@@ -37,7 +37,10 @@ public class VecPainterMenuBar extends JMenuBar {
         add(edit);
     }
 
-
+    /**
+     *
+     * @return
+     */
     JMenu createFileMenu(){
         JMenu var = new JMenu("File");
 
@@ -46,6 +49,7 @@ public class VecPainterMenuBar extends JMenuBar {
         var.add(loadFile);
 
         saveFile = new JMenuItem("Save");
+        saveFile.addActionListener(menuListener);
         var.add(saveFile);
 
         clear = new JMenuItem("Clear");
@@ -72,10 +76,25 @@ public class VecPainterMenuBar extends JMenuBar {
 
     private class MenuListener implements ActionListener {
 
-
-        private void loadFile(){
+        /**
+         *
+         */
+        private void loadFileInteraction(){
             if (!canvas.getInstructions().isEmpty()){
-                // TO DO: Save prompt
+
+                int dialogResult = JOptionPane.showConfirmDialog (VecPainterMenuBar.this, "Would you like to save your work first?");
+                if (dialogResult == JOptionPane.OK_OPTION){
+
+                    int resp = saveFileInteraction();
+
+                    if (resp==VecFileChooser.CANCEL_OPTION){
+                        return;
+                    }
+                }
+
+                if (dialogResult == JOptionPane.CANCEL_OPTION){
+                    return;
+                }
             }
 
             int returnVal = chooser.showOpenDialog(VecPainterMenuBar.this);
@@ -97,15 +116,59 @@ public class VecPainterMenuBar extends JMenuBar {
             }
         }
 
+
+        /**
+         *
+         * @return
+         */
+        private int saveFileInteraction(){
+            int resp = chooser.showSaveDialog(VecPainterMenuBar.this);
+
+            if (resp==VecFileChooser.APPROVE_OPTION){
+                String path = chooser.getSelectedFile().getPath();
+
+                if (!path.endsWith(".vec")){
+                    StringBuilder sb = new StringBuilder();
+                    sb.append(path);
+                    sb.append(".vec");
+                    path = sb.toString();
+                }
+
+                try{
+                    VecFileManager.WriteToFile(path);
+                }
+                catch(VecFileException ex){
+                    JOptionPane.showMessageDialog(null,String.format("Cannot save file: %s.\n%s",file.getName(),ex.getMessage()),"Title",1);
+                }
+
+                return VecFileChooser.APPROVE_OPTION;
+            }
+
+            else if (resp==VecFileChooser.CANCEL_OPTION){
+                return VecFileChooser.CANCEL_OPTION;
+            }
+            else{
+                return -1;
+            }
+        }
+
+        /**
+         *
+         * @param e
+         */
         @Override
         public void actionPerformed(ActionEvent e) {
 
             Component source = (Component) e.getSource();
             if (source == loadFile) {
-                loadFile();
+                loadFileInteraction();
             }
             if (source == clear){
                 canvas.clear();
+            }
+
+            if (source == saveFile){
+                saveFileInteraction();
             }
 
             if (source == undo ){
@@ -115,6 +178,9 @@ public class VecPainterMenuBar extends JMenuBar {
         }
     }
 
+    /**
+     * Extends JFileChooser, only shows files .vec extension by default.
+     */
     private class VecFileChooser extends JFileChooser{
 
         VecFileChooser(){
@@ -134,5 +200,7 @@ public class VecPainterMenuBar extends JMenuBar {
                 }
             });
         }
+
+
     }
 }

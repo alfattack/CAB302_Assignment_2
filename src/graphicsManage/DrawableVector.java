@@ -9,4 +9,10 @@ public interface DrawableVector {
     VectorCommand getCommand();
 
     DrawableVector returnCopy();
+
+    boolean isFilled();
+
+    Color getColor();
+
+    Color getFillColor();
 }

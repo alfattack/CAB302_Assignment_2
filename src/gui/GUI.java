@@ -15,6 +15,8 @@ public class GUI extends JFrame implements Runnable{
 
     // Central Panel which holds canvas.
     private JPanel canvasPanel;
+    private JColorChooser penChooser;
+    private JColorChooser fillChooser;
 
     // Stores whether fill is selected
     private boolean fill;
@@ -36,6 +38,8 @@ public class GUI extends JFrame implements Runnable{
         add(buttonPanel, BorderLayout.SOUTH);
         setJMenuBar(new VecPainterMenuBar());
 
+        //configureColorChoosers();
+
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
@@ -44,12 +48,13 @@ public class GUI extends JFrame implements Runnable{
         });
     }
 
-
-    JPanel createPanel(Color c){
-        JPanel var = new JPanel();
-        var.setBackground(c);
-        return var;
+    private void configureColorChoosers(){
+        penChooser = new JColorChooser();
+        fillChooser = new JColorChooser();
+        add(penChooser, BorderLayout.WEST);
+        add(penChooser, BorderLayout.WEST);
     }
+
     /**
      * Creates Panel which houses the canvas.
      * @return
@@ -93,13 +98,13 @@ public class GUI extends JFrame implements Runnable{
     }
 
     public static void main(String[] args) {
-        GUI gui = new GUI();
-        gui.setVisible(true);
-        gui.resizeCanvas();
+        javax.swing.SwingUtilities.invokeLater(new GUI());
     }
 
     @Override
     public void run() {
         GUI gui = new GUI();
+        gui.setVisible(true);
+        gui.resizeCanvas();
     }
 }

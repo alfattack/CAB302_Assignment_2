@@ -13,7 +13,12 @@ public class Polygon implements DrawableVector {
     private boolean finished;
 
 
-    public Polygon(double[] x_points, double y_points, boolean fill, Color color, Color fillColour){
+    public Polygon(ArrayList<Double> x_points, ArrayList<Double> y_points, boolean fill, Color color, Color fillColour){
+        this.x_points = x_points;
+        this.y_points = y_points;
+        this.fill = fill;
+        this.color=color;
+        this.fillColour=fillColour;
         this.finished=true;
     }
 
@@ -96,6 +101,21 @@ public class Polygon implements DrawableVector {
         return null;
     }
 
+    @Override
+    public boolean isFilled() {
+        return fill;
+    }
+
+    @Override
+    public Color getColor() {
+        return color;
+    }
+
+    @Override
+    public Color getFillColor() {
+        return fillColour;
+    }
+
     /**
      *
      * @param x
@@ -119,7 +139,7 @@ public class Polygon implements DrawableVector {
     }
 
     /**
-     *
+     * Finish drawing the polygon.
      */
     public void finishShape(){
 
@@ -129,5 +149,16 @@ public class Polygon implements DrawableVector {
             finished=true;
             System.out.println("test finish shape");
         }
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getCommand().toString());
+        sb.append(" ");
+        for (int i=0;i<x_points.size();i++){
+            sb.append(String.format("%f %f ",x_points.get(i),y_points.get(i)));
+        }
+        return sb.toString();
     }
 }

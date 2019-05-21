@@ -58,11 +58,11 @@ class VecButtonPanel extends JPanel {
     }
 
     public void setPenColour(Color color){
-
+        this.fillColour=color;
     }
 
     public void setFillColour(Color color){
-
+        this.color= color;
     }
 
 

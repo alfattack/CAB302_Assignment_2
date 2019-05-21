@@ -39,4 +39,24 @@ public class Point extends FixedPointVector {
     public DrawableVector returnCopy() {
         return new Point(-1,-1,super.color);
     }
+
+    @Override
+    public boolean isFilled() {
+        return false;
+    }
+
+    @Override
+    public Color getFillColor() {
+        return null;
+    }
+
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getCommand().toString());
+        sb.append(" ");
+        sb.append(x1+" "+y1);
+        return sb.toString();
+    }
 }

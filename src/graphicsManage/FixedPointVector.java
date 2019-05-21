@@ -121,6 +121,17 @@ public abstract class FixedPointVector implements DrawableVector {
         this.y1 = (double) y1/height;
         this.y2 = (double) y2/height;
     }
+
+    @Override
+    public Color getColor() {
+        return color;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%f %f %f %f",x1,y1,x2,y2);
+    };
+
     public abstract VectorCommand getCommand();
 }
 

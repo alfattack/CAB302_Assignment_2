@@ -52,4 +52,23 @@ public class Line extends FixedPointVector {
     public DrawableVector returnCopy() {
         return new Line(this.x1,this.y1,this.x2,this.y2,color);
     }
+
+    @Override
+    public boolean isFilled() {
+        return false;
+    }
+
+    @Override
+    public Color getFillColor() {
+        return null;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getCommand().toString());
+        sb.append(" ");
+        sb.append(super.toString());
+        return sb.toString();
+    }
 }

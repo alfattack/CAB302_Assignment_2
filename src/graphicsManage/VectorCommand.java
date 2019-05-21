@@ -7,5 +7,5 @@ public enum VectorCommand {
     POINT,
     POLYGON,
     FILL,
-    COLOR,
+    PEN,
 }

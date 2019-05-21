@@ -7,7 +7,7 @@ public class Rectangle extends FixedPointVector {
     private Color fillColour = null;
     private boolean fill = false;
 
-    public Rectangle(double x1, double y1, double x2, double y2, boolean fill, Color color, Color fillColour){
+    public Rectangle(double x1, double y1, double x2, double y2, boolean fill, Color color, Color fillColor){
         super(x1,y1,x2,y2,color);
         this.fill=fill;
         this.fillColour=fillColour;
@@ -43,5 +43,24 @@ public class Rectangle extends FixedPointVector {
     @Override
     public DrawableVector returnCopy() {
         return new Rectangle(super.color, fillColour, fill);
+    }
+
+    @Override
+    public boolean isFilled() {
+        return fill;
+    }
+
+    @Override
+    public Color getFillColor() {
+        return fillColour;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getCommand().toString());
+        sb.append(" ");
+        sb.append(super.toString());
+        return sb.toString();
     }
 }
