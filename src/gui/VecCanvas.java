@@ -93,6 +93,11 @@ public class VecCanvas extends JPanel {
         return instructions;
     }
 
+
+    public DrawableVector getCurrentInstruction() {
+        return currentInstruction;
+    }
+
     /**
      *
      * @param g
@@ -136,7 +141,7 @@ public class VecCanvas extends JPanel {
             }
             else{
                 switch(currentInstruction.getCommand()){
-                    case POINT:
+                    case PLOT:
                         ((FixedPointVector) currentInstruction).setCoordinates(click_x,click_y,click_x,click_y,getWidth(),getHeight());
                         instance.addComponent(currentInstruction);
                         break;

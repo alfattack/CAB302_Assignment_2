@@ -32,7 +32,7 @@ public class Point extends FixedPointVector {
 
     @Override
     public VectorCommand getCommand() {
-        return VectorCommand.POINT;
+        return VectorCommand.PLOT;
     }
 
     @Override

@@ -4,17 +4,18 @@ import java.awt.*;
 
 public class Elipses extends FixedPointVector {
 
-    private Color fillColour = null;
+    private Color fillColor = null;
     private boolean fill = false;
 
-    public Elipses(double x1, double y1, double x2, double y2, boolean fill, Color color, Color fillColour){
+    public Elipses(double x1, double y1, double x2, double y2, boolean fill, Color color, Color fillColor){
         super(x1,y1,x2,y2,color);
         this.fill=fill;
+        this.fillColor=fillColor;
     }
 
-    public Elipses(Color color, Color fillColour, boolean fill) {
+    public Elipses(Color color, Color fillColor, boolean fill) {
         super.color = color;
-        this.fillColour = fillColour;
+        this.fillColor = fillColor;
         this.fill = fill;
     }
 
@@ -28,7 +29,7 @@ public class Elipses extends FixedPointVector {
         g.setColor(this.color);
 
         if (fill){
-            g.setColor(fillColour);
+            g.setColor(fillColor);
             g.fillOval(x1_pixel,y1_pixel,x2_pixel-x1_pixel,y2_pixel-y1_pixel);
         }
         g.setColor(this.color);
@@ -42,7 +43,7 @@ public class Elipses extends FixedPointVector {
 
     @Override
     public DrawableVector returnCopy() {
-        return new Elipses(super.color, fillColour, this.fill);
+        return new Elipses(super.color, fillColor, this.fill);
     }
 
     @Override
@@ -50,9 +51,15 @@ public class Elipses extends FixedPointVector {
         return fill;
     }
 
+
+    @Override
+    public void setFillColor(Color fillColor) {
+        this.fillColor = fillColor;
+    }
+
     @Override
     public Color getFillColor() {
-        return fillColour;
+        return fillColor;
     }
 
     @Override

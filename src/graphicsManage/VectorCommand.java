@@ -4,7 +4,7 @@ public enum VectorCommand {
     LINE,
     RECTANGLE,
     ELIPSES,
-    POINT,
+    PLOT,
     POLYGON,
     FILL,
     PEN,

@@ -15,4 +15,8 @@ public interface DrawableVector {
     Color getColor();
 
     Color getFillColor();
+
+    void setColor(Color color);
+
+    void setFillColor(Color color);
 }

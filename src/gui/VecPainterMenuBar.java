@@ -77,9 +77,11 @@ public class VecPainterMenuBar extends JMenuBar {
     private class MenuListener implements ActionListener {
 
         /**
-         *
+         * Interaction which handles file loading.
          */
         private void loadFileInteraction(){
+
+            // If the canvas is not empty, as user if they wish to save first.
             if (!canvas.getInstructions().isEmpty()){
 
                 int dialogResult = JOptionPane.showConfirmDialog (VecPainterMenuBar.this, "Would you like to save your work first?");
@@ -104,6 +106,7 @@ public class VecPainterMenuBar extends JMenuBar {
                 int dialogResult = JOptionPane.showConfirmDialog (chooser, String.format("Open %s?",file.getName()));
 
                 if (dialogResult==JOptionPane.OK_OPTION){
+
                     try{
                         ArrayList<DrawableVector> instructions = VecFileManager.readFromFile(file.getPath());
                         canvas.setInstructions(instructions);
@@ -118,7 +121,7 @@ public class VecPainterMenuBar extends JMenuBar {
 
 
         /**
-         *
+         * Interaction which handles file saving.
          * @return
          */
         private int saveFileInteraction(){
@@ -135,21 +138,17 @@ public class VecPainterMenuBar extends JMenuBar {
                 }
 
                 try{
-                    VecFileManager.WriteToFile(path);
+                    VecFileManager.writeToFile(path);
+
+                    JOptionPane.showMessageDialog(null, String.format("File saved to: %s",path));
+                    return VecFileChooser.APPROVE_OPTION;
+
                 }
                 catch(VecFileException ex){
                     JOptionPane.showMessageDialog(null,String.format("Cannot save file: %s.\n%s",file.getName(),ex.getMessage()),"Title",1);
                 }
-
-                return VecFileChooser.APPROVE_OPTION;
             }
-
-            else if (resp==VecFileChooser.CANCEL_OPTION){
-                return VecFileChooser.CANCEL_OPTION;
-            }
-            else{
-                return -1;
-            }
+            return VecFileChooser.CANCEL_OPTION;
         }
 
         /**

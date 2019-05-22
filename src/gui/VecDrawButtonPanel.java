@@ -11,7 +11,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-class VecButtonPanel extends JPanel {
+class VecDrawButtonPanel extends JPanel implements ActionListener{
 
     private VecCanvas canvas;
     private JButton rectangle;
@@ -23,10 +23,10 @@ class VecButtonPanel extends JPanel {
     private JButton polygonFill;
     private JButton point;
 
-    private Color fillColour = Color.BLACK;
+    private Color fillColor = Color.BLACK;
     private Color color = Color.BLACK;
 
-    VecButtonPanel(){
+    VecDrawButtonPanel(){
         setLayout(new FlowLayout());
         canvas = VecCanvas.getCanvas();
 
@@ -50,50 +50,56 @@ class VecButtonPanel extends JPanel {
         add(point);
     }
 
-    public JButton createButton(ImageIcon icon){
+    private JButton createButton(ImageIcon icon){
         JButton var = new JButton(icon);
         var.setBackground(Color.WHITE);
-        var.addActionListener(new ButtonCommandListener());
+        var.addActionListener(this);
         return var;
     }
 
-    public void setPenColour(Color color){
-        this.fillColour=color;
+    public void setPenColor(Color color){
+        this.color=color;
     }
 
-    public void setFillColour(Color color){
-        this.color= color;
+    public Color getPenColor(){
+        return color;
+    }
+
+    public Color getFillColor() {
+        return fillColor;
+    }
+
+    public void setFillColor(Color color){
+        this.fillColor = color;
     }
 
 
-    private class ButtonCommandListener implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
-            Component source = (Component) e.getSource();
+    public void actionPerformed(ActionEvent e) {
+        Component source = (Component) e.getSource();
 
-            if (source == rectangle){
-                canvas.updateCurrentInstruction(new Rectangle(color, fillColour, false));
-            }
-            if (source == rectangleFill) {
-                canvas.updateCurrentInstruction(new Rectangle(color, fillColour, true));
-            }
-            if (source == elipses){
-                canvas.updateCurrentInstruction(new Elipses(color, fillColour,false));
-            }
-            if (source == elipsesFill){
-                canvas.updateCurrentInstruction(new Elipses(color, fillColour,true));
-            }
-            if (source == line){
-                canvas.updateCurrentInstruction(new Line(color));
-            }
-            if (source == point){
-                canvas.updateCurrentInstruction(new Point(color));
-            }
-            if (source == polygon){
-                canvas.updateCurrentInstruction(new Polygon(color, fillColour,false));
-            }
-            if (source == polygonFill){
-                canvas.updateCurrentInstruction(new Polygon(color, fillColour,true));
-            }
+        if (source == rectangle){
+            canvas.updateCurrentInstruction(new Rectangle(color, fillColor, false));
+        }
+        if (source == rectangleFill) {
+            canvas.updateCurrentInstruction(new Rectangle(color, fillColor, true));
+        }
+        if (source == elipses){
+            canvas.updateCurrentInstruction(new Elipses(color, fillColor,false));
+        }
+        if (source == elipsesFill){
+            canvas.updateCurrentInstruction(new Elipses(color, fillColor,true));
+        }
+        if (source == line){
+            canvas.updateCurrentInstruction(new Line(color));
+        }
+        if (source == point){
+            canvas.updateCurrentInstruction(new Point(color));
+        }
+        if (source == polygon){
+            canvas.updateCurrentInstruction(new Polygon(color, fillColor,false));
+        }
+        if (source == polygonFill){
+            canvas.updateCurrentInstruction(new Polygon(color, fillColor,true));
         }
     }
 }

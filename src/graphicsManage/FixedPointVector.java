@@ -128,6 +128,16 @@ public abstract class FixedPointVector implements DrawableVector {
     }
 
     @Override
+    public void setColor(Color color) {
+        this.color=color;
+    }
+
+    @Override
+    public void setFillColor(Color color) {
+        return;
+    }
+
+    @Override
     public String toString() {
         return String.format("%f %f %f %f",x1,y1,x2,y2);
     };

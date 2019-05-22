@@ -59,9 +59,9 @@ public class VecFileManager {
                 shape = new Rectangle(xcords.get(0).doubleValue(),ycords.get(0).doubleValue(),xcords.get(1).doubleValue(),ycords.get(1).doubleValue(), fill, color, fillColor);
                 break;
             case ELIPSES:
-                shape = new Rectangle(xcords.get(0).doubleValue(),ycords.get(0).doubleValue(),xcords.get(1).doubleValue(),ycords.get(1).doubleValue(), fill, color, fillColor);
+                shape = new Elipses(xcords.get(0).doubleValue(),ycords.get(0).doubleValue(),xcords.get(1).doubleValue(),ycords.get(1).doubleValue(), fill, color, fillColor);
                 break;
-            case POINT:
+            case PLOT:
                 shape = new Point(xcords.get(0).doubleValue(), ycords.get(0), color);
                 break;
             case POLYGON:
@@ -79,11 +79,15 @@ public class VecFileManager {
      * @return
      */
     private static Color getColorFromHex(String color){
-        return Color.BLACK;
+        return Color.decode(color);
     }
 
-    private static String getHexFromColor(Color color){
-        return "#FFFFFF";
+    private static String getHexFromColor(Color color)
+    {
+        String r = Integer.toHexString(color.getRed());
+        String g = Integer.toHexString(color.getGreen());
+        String b = Integer.toHexString(color.getBlue());
+        return String.format("#%s%s%s",r,g,b);
     }
 
     /**
@@ -98,7 +102,7 @@ public class VecFileManager {
         BufferedReader file;
         Color color = Color.BLACK;
         boolean fill = false;
-        Color fillColor = null;
+        Color fillColor = Color.black;
 
         String currentline = null;
         try{
@@ -115,7 +119,7 @@ public class VecFileManager {
                             color = getColorFromHex(commandArgs[1]);
                             break;
                         case FILL:
-                            if (commandArgs[1] == "OFF"){
+                            if (currentline.equals("FILL OFF")){
                                 fill=false;
                                 fillColor=null;
                             }
@@ -151,23 +155,42 @@ public class VecFileManager {
      * Writes  the current state of the canvas instructions to file.
      * @param path
      */
-    public static void WriteToFile(String path) throws VecFileException{
+    public static void writeToFile(String path) throws VecFileException{
         BufferedWriter file;
         ArrayList<DrawableVector> instructions = VecCanvas.getCanvas().getInstructions();
 
-        boolean fill;
-        Color fillColor;
-        Color penColor;
+        boolean fill = false;
+        Color fillColor= Color.BLACK;
+        Color penColor = Color.BLACK;
 
         try{
             file = new BufferedWriter(new FileWriter(path));
 
             for (DrawableVector v: instructions){
 
-                if ((v.getCommand() != LINE) && (v.getCommand() != POINT)){
-
+                if (!(v.getColor().equals(penColor))){
+                    file.write(String.format("PEN %S\n",getHexFromColor(v.getColor())));
                 }
 
+                if ((v.getCommand() != LINE) && (v.getCommand() != PLOT)){
+
+
+                    if ((v.isFilled()) && (fill) && (!v.getFillColor().equals(fillColor))){
+                        file.write(String.format("FILL %S\n",getHexFromColor(v.getFillColor())));
+                    }
+
+                    if ((v.isFilled() != fill)){
+
+                        fill = v.isFilled();
+
+                        if (fill){
+                            file.write(String.format("FILL %S\n",getHexFromColor(v.getFillColor())));
+                        }
+                        else{
+                            file.write("FILL OFF\n");
+                        }
+                    }
+                }
 
                 System.out.println(v.toString());
                 file.write(v.toString());

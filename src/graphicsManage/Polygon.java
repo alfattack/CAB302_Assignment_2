@@ -116,6 +116,16 @@ public class Polygon implements DrawableVector {
         return fillColour;
     }
 
+    @Override
+    public void setColor(Color color) {
+        this.color=color;
+    }
+
+    @Override
+    public void setFillColor(Color color) {
+        this.fillColour=color;
+    }
+
     /**
      *
      * @param x
