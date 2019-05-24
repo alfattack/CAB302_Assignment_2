@@ -78,16 +78,22 @@ public class VecFileManager {
      * @param color
      * @return
      */
-    private static Color getColorFromHex(String color){
-        return Color.decode(color);
+    private static Color getColorFromHex(String color) throws VecFileException{
+        try{
+            int r = Integer.parseInt(color.substring(1,3),16);
+            int g = Integer.parseInt(color.substring(3,5),16);
+            int b = Integer.parseInt(color.substring(5),16);
+            System.out.println(String.format("%d %d %d",r,g,b));
+            return new Color(r,g,b);
+        }
+        catch (Exception e){
+            throw new VecFileException();
+        }
     }
 
     private static String getHexFromColor(Color color)
     {
-        String r = Integer.toHexString(color.getRed());
-        String g = Integer.toHexString(color.getGreen());
-        String b = Integer.toHexString(color.getBlue());
-        return String.format("#%s%s%s",r,g,b);
+        return String.format("#%02x%02x%02x",color.getRed(),color.getGreen(),color.getBlue());
     }
 
     /**
@@ -170,6 +176,7 @@ public class VecFileManager {
 
                 if (!(v.getColor().equals(penColor))){
                     file.write(String.format("PEN %S\n",getHexFromColor(v.getColor())));
+                    penColor=v.getColor();
                 }
 
                 if ((v.getCommand() != LINE) && (v.getCommand() != PLOT)){
@@ -177,6 +184,7 @@ public class VecFileManager {
 
                     if ((v.isFilled()) && (fill) && (!v.getFillColor().equals(fillColor))){
                         file.write(String.format("FILL %S\n",getHexFromColor(v.getFillColor())));
+                        fillColor=v.getFillColor();
                     }
 
                     if ((v.isFilled() != fill)){
@@ -185,6 +193,7 @@ public class VecFileManager {
 
                         if (fill){
                             file.write(String.format("FILL %S\n",getHexFromColor(v.getFillColor())));
+                            fillColor=v.getFillColor();
                         }
                         else{
                             file.write("FILL OFF\n");
