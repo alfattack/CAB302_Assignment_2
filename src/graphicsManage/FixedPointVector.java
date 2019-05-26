@@ -151,8 +151,8 @@ public abstract class FixedPointVector implements DrawableVector {
     }
 
     /**
-     * base string representation of some fixed point shapes (only coordinates as instructions change).
-     * @return
+     * base String representation of some fixed point shapes (only coordinates as instructions change).
+     * @return string representation of coordinates
      */
     @Override
     public String toString() {

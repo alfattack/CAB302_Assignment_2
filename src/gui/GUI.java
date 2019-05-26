@@ -2,6 +2,7 @@ package gui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
@@ -17,7 +18,7 @@ public class GUI extends JFrame implements Runnable{
 
 
     /**
-     * Creates the GUI - called inside Run function.
+     * Creates the GUI - called inside 'run' function.
      */
     public void createGUI(){
         setTitle("Vec Painter");
@@ -35,14 +36,12 @@ public class GUI extends JFrame implements Runnable{
         add(drawButtonPanel, BorderLayout.SOUTH);
         add(configButtonPanel, BorderLayout.EAST);
         setJMenuBar(new VecPainterMenuBar());
-
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
                 resizeCanvas();
             }
         });
-        addKeyListener(new KeyCommandListener());
         setVisible(true);
     }
 

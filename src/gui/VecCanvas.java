@@ -7,8 +7,7 @@ import graphicsManage.VectorCommand;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.util.ArrayList;
 
 import static graphicsManage.VectorCommand.*;
@@ -36,6 +35,27 @@ public class VecCanvas extends JPanel {
         MouseAdapter mouse = new CanvasMouse();
         this.addMouseListener(mouse);
         this.addMouseMotionListener(mouse);
+        setupKeyBindings();
+    }
+
+    /**
+     * Set up keyboard shortcuts for controlling canvas.
+     */
+    private void setupKeyBindings(){
+        // CTRL Z
+        KeyStroke ctrl_z = KeyStroke.getKeyStroke("control Z");
+        getActionMap().put("ctrl_z", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                undo();
+                repaint();
+            }
+        });
+        getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(ctrl_z,"ctrl_z");
+
+
+
+
     }
 
     /**
@@ -60,7 +80,7 @@ public class VecCanvas extends JPanel {
     /**
      * Undo last committed instruction.
      */
-    public void undo(){
+    public synchronized void undo(){
         int index_of_last_operation = instructions.size() - 1;
         if (index_of_last_operation >= 0){
             instructions.remove(index_of_last_operation);
@@ -79,7 +99,7 @@ public class VecCanvas extends JPanel {
      * Adds a drawable vector to the list of instructions.
      * @param draw
      */
-    public void addComponent(DrawableVector draw) {
+    public synchronized void addComponent(DrawableVector draw) {
         instructions.add(draw);
     }
 
@@ -125,7 +145,7 @@ public class VecCanvas extends JPanel {
     }
 
     /**
-     * Mouse that interacts with the canvas.
+     * Mouse that interacts with the canvas. (I'll admit this is a bit spaghetti)
      */
     private class CanvasMouse extends MouseAdapter{
         @Override
@@ -166,7 +186,7 @@ public class VecCanvas extends JPanel {
 
         /**
          * mouse dragged event.
-         * @param e
+         * @param e event object.
          */
         @Override
         public void mouseDragged(MouseEvent e) {
@@ -182,7 +202,7 @@ public class VecCanvas extends JPanel {
 
         /**
          * mouse released event.
-         * @param e
+         * @param e event object.
          */
         @Override
         public void mouseReleased(MouseEvent e) {
