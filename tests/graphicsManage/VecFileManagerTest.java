@@ -24,9 +24,7 @@ class VecFileManagerTest {
     @Test
     void getColorFromHexIncorrect(){
         assertThrows(VecFileException.class,
-                ()->{
-            VecFileManager.getColorFromHex("#FF13P");
-                });
+                ()-> VecFileManager.getColorFromHex("#FF13P"));
     }
 
     @Test

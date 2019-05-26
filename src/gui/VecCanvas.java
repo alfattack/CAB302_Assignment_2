@@ -4,7 +4,6 @@ import graphicsManage.*;
 import graphicsManage.Polygon;
 
 import javax.imageio.ImageIO;
-import javax.imageio.stream.ImageOutputStreamImpl;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -16,7 +15,7 @@ import java.util.ArrayList;
 import static graphicsManage.VectorCommand.*;
 
 /**
- * The GUI component for the drawing Canvas. Singleton design pattern for a shared instance across application.
+ * The GUI component for the canvas. Singleton design pattern for a shared instance across application.
  */
 public class VecCanvas extends JPanel {
 

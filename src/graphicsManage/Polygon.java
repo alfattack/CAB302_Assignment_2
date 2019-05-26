@@ -4,7 +4,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 /**
- * Polygon shape which implements DrawableVector
+ * Polygon Command.
  */
 public class Polygon implements DrawableVector {
 
@@ -91,7 +91,7 @@ public class Polygon implements DrawableVector {
      * @param height canvas height.
      * @return array of ints
      */
-    private int[] getAbsoluteCoordinates(ArrayList<Double> relativePoints, int width, int height){
+    public int[] getAbsoluteCoordinates(ArrayList<Double> relativePoints, int width, int height){
         int[] abs_points = new int[relativePoints.size()];
         for (int i = 0; i < relativePoints.size(); i++){
             abs_points[i] = (int)Math.round(relativePoints.get(i)*width);
@@ -190,7 +190,6 @@ public class Polygon implements DrawableVector {
     public void finishShape(){
         if (!x_points.isEmpty()){
             finished=true;
-            System.out.println("test finish shape");
         }
     }
 
@@ -204,7 +203,10 @@ public class Polygon implements DrawableVector {
         sb.append(getCommand().toString());
         sb.append(" ");
         for (int i=0;i<x_points.size();i++){
-            sb.append(String.format("%.6f %.6f ",x_points.get(i),y_points.get(i)));
+            sb.append(String.format("%.6f %.6f",x_points.get(i),y_points.get(i)));
+            if (i < x_points.size()-1){
+                sb.append(" ");
+            }
         }
         return sb.toString();
     }

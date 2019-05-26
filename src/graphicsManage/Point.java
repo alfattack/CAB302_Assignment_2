@@ -3,7 +3,7 @@ package graphicsManage;
 import java.awt.*;
 
 /**
- * Point class. Extends FixedPointVector however x1 and x2 will be the same, likewise for y1 and y2.
+ * Point Command.
  */
 public class Point extends FixedPointVector {
 

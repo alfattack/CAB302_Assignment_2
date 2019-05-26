@@ -3,7 +3,7 @@ package graphicsManage;
 import java.awt.*;
 
 /**
- * Rectangle shape which extends FixedPointVector.
+ * Rectangle Command.
  */
 public class Rectangle extends FixedPointVector {
 

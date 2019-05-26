@@ -3,7 +3,7 @@ package graphicsManage;
 import java.awt.*;
 
 /**
- * Line implementation of FixedPointVector
+ * Line Command
  */
 public class Line extends FixedPointVector {
 

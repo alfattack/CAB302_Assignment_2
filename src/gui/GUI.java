@@ -82,9 +82,6 @@ public class GUI extends JFrame implements Runnable{
             canvasHeight=canvasWidth;
         }
 
-
-        System.out.println(String.format("CANVAS D x*x: %d\tPANEL WIDTH: %d\t PANEL_HEIGHT: %d",(int)canvasWidth,canvasPanel.getWidth(),canvasPanel.getHeight()));
-
         canvas.setPreferredSize(new Dimension((int)canvasWidth,(int)canvasHeight));
         canvasPanel.repaint();
         canvasPanel.add(VecCanvas.getCanvas());
