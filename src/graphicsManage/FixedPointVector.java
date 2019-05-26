@@ -139,7 +139,7 @@ public abstract class FixedPointVector implements DrawableVector {
 
     @Override
     public String toString() {
-        return String.format("%f %f %f %f",x1,y1,x2,y2);
+        return String.format("%.6f %.6f %.6f %.6f",x1,y1,x2,y2);
     };
 
     public abstract VectorCommand getCommand();

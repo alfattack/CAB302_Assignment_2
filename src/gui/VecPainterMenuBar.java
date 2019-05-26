@@ -52,10 +52,6 @@ public class VecPainterMenuBar extends JMenuBar {
         saveFile.addActionListener(menuListener);
         var.add(saveFile);
 
-        clear = new JMenuItem("Clear");
-        clear.addActionListener(menuListener);
-        var.add(clear);
-
         return var;
     }
 

@@ -120,7 +120,6 @@ public class VecCanvas extends JPanel {
      */
     private class CanvasMouse extends MouseAdapter{
         @Override
-
         /**
          *
          */

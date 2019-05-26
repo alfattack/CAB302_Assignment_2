@@ -16,6 +16,7 @@ public class Polygon implements DrawableVector {
     public Polygon(ArrayList<Double> x_points, ArrayList<Double> y_points, boolean fill, Color color, Color fillColour){
         this.x_points = x_points;
         this.y_points = y_points;
+
         this.fill = fill;
         this.color=color;
         this.fillColour=fillColour;
@@ -89,7 +90,7 @@ public class Polygon implements DrawableVector {
     }
 
     public boolean isValid(){
-        return ((x_points.size() > 1) && (y_points.size() > 1));
+        return ((x_points.size() > 0) && (y_points.size() > 0));
     }
 
     /**
@@ -139,23 +140,10 @@ public class Polygon implements DrawableVector {
     }
 
     /**
-     *
-     * @param x
-     * @param y
-     */
-    public void addCoordinates(double x, double y){
-        x_points.add(x);
-        y_points.add(y);
-    }
-
-    /**
      * Finish drawing the polygon.
      */
     public void finishShape(){
-
         if (!x_points.isEmpty()){
-            x_points.add(x_points.get(0));
-            y_points.add(y_points.get(0));
             finished=true;
             System.out.println("test finish shape");
         }
@@ -167,7 +155,7 @@ public class Polygon implements DrawableVector {
         sb.append(getCommand().toString());
         sb.append(" ");
         for (int i=0;i<x_points.size();i++){
-            sb.append(String.format("%f %f ",x_points.get(i),y_points.get(i)));
+            sb.append(String.format("%.6f %.6f ",x_points.get(i),y_points.get(i)));
         }
         return sb.toString();
     }

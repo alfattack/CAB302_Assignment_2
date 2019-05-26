@@ -44,6 +44,8 @@ public class GUI extends JFrame implements Runnable{
                 resizeCanvas();
             }
         });
+        addKeyListener(new KeyCommandListener());
+        setFocusable(true);
     }
 
     /**

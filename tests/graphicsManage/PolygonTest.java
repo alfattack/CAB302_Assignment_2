@@ -1,26 +1,56 @@
 package graphicsManage;
 
+import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class PolygonTest {
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getCommand() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void isValid() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void returnCopy() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
+    void isFilled() {
+    }
+
+    @Test
+    void getColor() {
+    }
+
+    @Test
+    void getFillColor() {
+    }
+
+    @Test
+    void setColor() {
+    }
+
+    @Test
+    void setFillColor() {
+    }
+
+    @Test
+    void addCoordinates() {
+    }
+
+    @Test
+    void addCoordinates1() {
+    }
+
+    @Test
     void finishShape() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void toString1() {
     }
 }

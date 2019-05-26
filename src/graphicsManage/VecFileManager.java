@@ -19,12 +19,12 @@ public class VecFileManager {
      * @return
      * @throws VecFileException
      */
-    private static DrawableVector vecFromInstruction(String[] commandArgs, boolean fill, Color color, Color fillColor) throws VecFileException{
+    public static DrawableVector vecFromInstruction(String[] commandArgs, boolean fill, Color color, Color fillColor) throws VecFileException{
 
         DrawableVector shape = null;
 
         if (commandArgs.length % 2 == 0){
-            throw new VecFileException();
+            throw new VecFileException("not enough arguments in one or more lines.");
         }
 
         ArrayList<Double> xcords = new ArrayList<>();
@@ -37,7 +37,7 @@ public class VecFileManager {
                 i+=2;
             }
             catch (IndexOutOfBoundsException e){
-                throw new VecFileException();
+                throw new VecFileException("X and Y values don't match for one or more instructions.");
             }
             catch (NumberFormatException e){
                 // continue - try parse next value
@@ -46,7 +46,7 @@ public class VecFileManager {
         }
 
         if (xcords.size() != ycords.size()){
-            throw new VecFileException();
+            throw new VecFileException("X and Y values don't match for one or more instructions.");
         }
 
         VectorCommand vecCommand = VectorCommand.valueOf(commandArgs[0]);
@@ -68,7 +68,7 @@ public class VecFileManager {
                 shape = new Polygon(xcords, ycords, fill, color, fillColor);
                 break;
             default:
-                throw new VecFileException();
+                throw new VecFileException("Instruction not recognised.");
         }
         return shape;
     }
@@ -78,20 +78,19 @@ public class VecFileManager {
      * @param color
      * @return
      */
-    private static Color getColorFromHex(String color) throws VecFileException{
+    public static Color getColorFromHex(String color) throws VecFileException{
         try{
             int r = Integer.parseInt(color.substring(1,3),16);
             int g = Integer.parseInt(color.substring(3,5),16);
             int b = Integer.parseInt(color.substring(5),16);
-            System.out.println(String.format("%d %d %d",r,g,b));
             return new Color(r,g,b);
         }
         catch (Exception e){
-            throw new VecFileException();
+            throw new VecFileException("Could not parse colour.");
         }
     }
 
-    private static String getHexFromColor(Color color)
+    public static String getHexFromColor(Color color)
     {
         return String.format("#%02x%02x%02x",color.getRed(),color.getGreen(),color.getBlue());
     }
@@ -109,8 +108,8 @@ public class VecFileManager {
         Color color = Color.BLACK;
         boolean fill = false;
         Color fillColor = Color.black;
-
         String currentline = null;
+
         try{
             file = new BufferedReader(new FileReader(path));
 
@@ -139,26 +138,25 @@ public class VecFileManager {
                     }
                 }
                 catch (IllegalArgumentException e){
-                    throw new VecFileException();
+                    throw new VecFileException("Illegal argument.");
                 }
                 catch (Exception e){
-                    throw new VecFileException();
+                    throw new VecFileException(e.getMessage());
                 }
             }
             file.close();
         }
-
         catch (FileNotFoundException e){
-            return null;
+            throw new VecFileException("File not found");
         }
         catch (IOException e){
-            throw new VecFileException();
+            throw new VecFileException("IO Exception");
         }
         return instructions;
     }
 
     /**
-     * Writes  the current state of the canvas instructions to file.
+     * Writes the current state of the canvas instructions to file.
      * @param path
      */
     public static void writeToFile(String path) throws VecFileException{
@@ -201,7 +199,6 @@ public class VecFileManager {
                     }
                 }
 
-                System.out.println(v.toString());
                 file.write(v.toString());
                 file.write("\n");
             }

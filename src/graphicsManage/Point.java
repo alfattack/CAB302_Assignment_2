@@ -56,7 +56,7 @@ public class Point extends FixedPointVector {
         StringBuilder sb = new StringBuilder();
         sb.append(getCommand().toString());
         sb.append(" ");
-        sb.append(x1+" "+y1);
+        sb.append(String.format("%.6f %.6f", x1, y1));
         return sb.toString();
     }
 }
