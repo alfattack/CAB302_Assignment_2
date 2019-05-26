@@ -2,7 +2,6 @@ package gui;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
@@ -30,12 +29,12 @@ public class GUI extends JFrame implements Runnable{
 
         canvasPanel = createCanvasPanel();
         add(canvasPanel, BorderLayout.CENTER);
-        VecDrawButtonPanel drawButtonPanel = new VecDrawButtonPanel();
-        VecConfigButtonPanel configButtonPanel = new VecConfigButtonPanel(drawButtonPanel);
-
+        VecCommandButtonPanel drawButtonPanel = new VecCommandButtonPanel();
+        VecColorButtonPanel configButtonPanel = new VecColorButtonPanel(drawButtonPanel);
         add(drawButtonPanel, BorderLayout.SOUTH);
         add(configButtonPanel, BorderLayout.EAST);
         setJMenuBar(new VecPainterMenuBar());
+
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
@@ -76,14 +75,16 @@ public class GUI extends JFrame implements Runnable{
         double canvasWidth = (double) canvasPanel.getWidth() * 0.95;
         double canvasHeight = (double) canvasPanel.getHeight() * 0.95;
 
-        System.out.println(canvasPanel.getWidth());
-
         if (canvasWidth > canvasHeight){
             canvasWidth=canvasHeight;
         }
         else{
             canvasHeight=canvasWidth;
         }
+
+
+        System.out.println(String.format("CANVAS D x*x: %d\tPANEL WIDTH: %d\t PANEL_HEIGHT: %d",(int)canvasWidth,canvasPanel.getWidth(),canvasPanel.getHeight()));
+
         canvas.setPreferredSize(new Dimension((int)canvasWidth,(int)canvasHeight));
         canvasPanel.repaint();
         canvasPanel.add(VecCanvas.getCanvas());

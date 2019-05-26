@@ -16,12 +16,14 @@ public class Polygon implements DrawableVector {
     private boolean finished;
 
     /**
+     *
      * Constructor using predefined points. Creates finished polygon.
      * @param x_points ArrayList of x points
      * @param y_points ArrayList of y points
      * @param fill boolean indicating whether to fill.
      * @param color pen color.
      * @param fillColour fill color.
+     * @throws VecFileException if x points and y points are of different lengths.
      */
     public Polygon(ArrayList<Double> x_points, ArrayList<Double> y_points, boolean fill, Color color, Color fillColour) throws VecFileException{
 
@@ -108,7 +110,7 @@ public class Polygon implements DrawableVector {
 
     /**
      * Returns whether the polygon is valid (i.e. at least one point contained for x and y, and of equal size)
-     * @return
+     * @return is valid
      */
     public boolean isValid(){
         return ((x_points.size() > 0) && (y_points.size() > 0) && (x_points.size()==y_points.size()));
@@ -116,7 +118,7 @@ public class Polygon implements DrawableVector {
 
     /**
      * Implemented from DrawableVector interface. Returns null for polygon.
-     * @return
+     * @return null
      */
     @Override
     public DrawableVector returnCopy() {

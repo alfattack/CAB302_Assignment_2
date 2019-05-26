@@ -14,7 +14,7 @@ import java.awt.event.ActionListener;
 /**
  * Button panel for shapes that can be drawn.
  */
-class VecDrawButtonPanel extends JPanel implements ActionListener{
+class VecCommandButtonPanel extends JPanel implements ActionListener{
 
     private VecCanvas canvas;
     private JButton rectangle;
@@ -32,7 +32,7 @@ class VecDrawButtonPanel extends JPanel implements ActionListener{
     /**
      * Constructor of panel. Create all the buttons with related icons.
      */
-    VecDrawButtonPanel(){
+    VecCommandButtonPanel(){
         setLayout(new FlowLayout());
         canvas = VecCanvas.getCanvas();
 

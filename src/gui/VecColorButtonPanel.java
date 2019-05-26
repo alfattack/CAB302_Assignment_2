@@ -10,10 +10,10 @@ import java.awt.event.ActionListener;
 /**
  * Button Panel relating to color selection for fill and pen.
  */
-public class VecConfigButtonPanel extends JPanel implements ActionListener {
+public class VecColorButtonPanel extends JPanel implements ActionListener {
     private JButton color;
     private JButton fillColor;
-    private VecDrawButtonPanel drawButtonPanel;
+    private VecCommandButtonPanel drawButtonPanel;
 
 
     private JPanel fillIndicator;
@@ -23,10 +23,10 @@ public class VecConfigButtonPanel extends JPanel implements ActionListener {
 
 
     /**
-     * Constructor of panel. VecDrawButtonPanel passed to update colour selections.
-     * @param drawButtonPanel
+     * Constructor of panel. VecCommandButtonPanel passed to update colour selections.
+     * @param drawButtonPanel GUI panel with command buttons.
      */
-    public VecConfigButtonPanel(VecDrawButtonPanel drawButtonPanel){
+    public VecColorButtonPanel(VecCommandButtonPanel drawButtonPanel){
 
         this.drawButtonPanel = drawButtonPanel;
 
@@ -63,7 +63,7 @@ public class VecConfigButtonPanel extends JPanel implements ActionListener {
 
 
     /**
-     * Button pressed event, updates colours for VecDrawButtonPanel.
+     * Button pressed event, updates colours for VecCommandButtonPanel.
      * @param e event object.
      */
     @Override

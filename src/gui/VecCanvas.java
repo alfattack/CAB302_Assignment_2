@@ -1,13 +1,16 @@
 package gui;
 
-import graphicsManage.DrawableVector;
-import graphicsManage.FixedPointVector;
+import graphicsManage.*;
 import graphicsManage.Polygon;
-import graphicsManage.VectorCommand;
 
+import javax.imageio.ImageIO;
+import javax.imageio.stream.ImageOutputStreamImpl;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import static graphicsManage.VectorCommand.*;
@@ -52,10 +55,6 @@ public class VecCanvas extends JPanel {
             }
         });
         getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(ctrl_z,"ctrl_z");
-
-
-
-
     }
 
     /**
@@ -75,7 +74,6 @@ public class VecCanvas extends JPanel {
     public void updateCurrentInstruction(DrawableVector draw){
         currentInstruction=draw;
     }
-
 
     /**
      * Undo last committed instruction.
@@ -97,7 +95,7 @@ public class VecCanvas extends JPanel {
 
     /**
      * Adds a drawable vector to the list of instructions.
-     * @param draw
+     * @param draw DrawableVector to add
      */
     public synchronized void addComponent(DrawableVector draw) {
         instructions.add(draw);
@@ -105,7 +103,7 @@ public class VecCanvas extends JPanel {
 
     /**
      * Sets instructions to predefined list of DrawableVectors.
-     * @param instructions
+     * @param instructions list of predefined instructions.
      */
     public void setInstructions(ArrayList<DrawableVector> instructions){
         this.instructions=instructions;
@@ -129,7 +127,7 @@ public class VecCanvas extends JPanel {
 
     /**
      * Paints the canvas using the draw method for all the DrawableVectors in contained instructions.
-     * @param g pass Graphics oject.
+     * @param g passed Graphics object.
      */
     @Override
     public void paintComponent(Graphics g) {
@@ -145,14 +143,51 @@ public class VecCanvas extends JPanel {
     }
 
     /**
+     * Paints the canvas using the draw method for all the DrawableVectors in contained instructions with enforced dimensions. (Used for exporting)
+     * @param g passed Graphics object
+     * @param width width of component to draw to
+     * @param height height of component to draw to
+     */
+    public void paintComponent(Graphics g, int width, int height) {
+        g.setColor(Color.WHITE);
+        g.fillRect(0,0,width,height);
+
+        for (DrawableVector instruction : instructions){
+            instruction.draw(g, width, height);
+        }
+        if (currentInstruction != null){
+            currentInstruction.draw(g, width, height);
+        }
+    }
+
+
+    /**
+     * Exports canvas as png to specified path
+     * @param path path of png.
+     * @throws IOException something went wrong with writing to file.
+     */
+    public void saveCanvasToPng(String path) throws IOException {
+        int WIDTH = 500;
+        int HEIGHT = 500;
+
+        BufferedImage image = new BufferedImage(WIDTH,HEIGHT, BufferedImage.TYPE_INT_RGB);
+        Graphics g = image.getGraphics();
+        paintComponent(g, WIDTH, HEIGHT);
+        ImageIO.write(image,"png",new File(path));
+    }
+
+    /**
      * Mouse that interacts with the canvas. (I'll admit this is a bit spaghetti)
      */
     private class CanvasMouse extends MouseAdapter{
-        @Override
+
         /**
-         *
+         * mouse pressed event.
+         * @param e event object.
          */
+        @Override
         public void mousePressed(MouseEvent e) {
+
             if (currentInstruction == null) return;
 
             click_x = e.getX();

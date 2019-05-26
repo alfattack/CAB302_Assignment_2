@@ -50,6 +50,8 @@ public abstract class FixedPointVector implements DrawableVector {
      * @param x2 second x
      * @param y2 second y
      * @param color pen color
+     * @param width canvas width
+     * @param height canvas height
      */
     public FixedPointVector(int x1, int y1, int x2, int y2, Color color, int width, int height){
         if (x1 > x2){
@@ -99,10 +101,12 @@ public abstract class FixedPointVector implements DrawableVector {
 
     /**
      * Sets instruction coordinates based on absolute pixel locations. These are converted to relative locations.
-     * @param x1
-     * @param y1
-     * @param x2
-     * @param y2
+     * @param x1 first x
+     * @param y1 first y
+     * @param x2 second x
+     * @param y2 second y
+     * @param width canvas width
+     * @param height canvas height
      */
     public void setCoordinates(int x1, int y1, int x2, int y2, int width, int height){
         if (x1 > x2){

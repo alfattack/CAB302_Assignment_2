@@ -15,7 +15,7 @@ public class VecFileManager {
 
     /**
      * Creates a Drawable vector based on a string of commands and coloring attributes.
-     * @param commandArgs String of commands in form <SHAPE> <COORDINATES>
+     * @param commandArgs String of commands in form SHAPE COORDINATES
      * @param fill whether the fill setting is set
      * @param color the current pen color
      * @param fillColor the current fill color
@@ -80,6 +80,7 @@ public class VecFileManager {
      * Returns a a hex string representation of a color object in form #RRGGBB
      * @param color string which represents hex values of RGB
      * @return Color color object derived from hex.
+     * @throws VecFileException colour could not be parsed.
      */
     public static Color getColorFromHex(String color) throws VecFileException{
         try{
@@ -102,7 +103,7 @@ public class VecFileManager {
      * Reads a .vec file and returns an ArrayList of DrawableVectors based on instructions.
      * @param path the path of the file to read from.
      * @return a list of DrawableVector objects.
-     * @throws FileNotFoundException
+     * @throws VecFileException if something went wrong with parsing.
      */
     public static ArrayList<DrawableVector> readFromFile(String path) throws VecFileException {
 
@@ -161,6 +162,7 @@ public class VecFileManager {
     /**
      * Writes the current state of the canvas instructions to file.
      * @param path output path.
+     * @throws VecFileException something went wrong with writing to file.
      */
     public static void writeToFile(String path) throws VecFileException{
         BufferedWriter file;

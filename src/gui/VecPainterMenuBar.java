@@ -19,6 +19,7 @@ public class VecPainterMenuBar extends JMenuBar {
 
     private JMenuItem loadFile;
     private JMenuItem saveFile;
+    private JMenuItem exportFile;
     private JMenuItem clear;
     private JMenuItem undo;
     private VecCanvas canvas;
@@ -58,6 +59,10 @@ public class VecPainterMenuBar extends JMenuBar {
         saveFile.addActionListener(menuListener);
         var.add(saveFile);
 
+        exportFile = new JMenuItem("Export to .png");
+        exportFile.addActionListener(menuListener);
+        var.add(exportFile);
+
         return var;
     }
 
@@ -90,10 +95,12 @@ public class VecPainterMenuBar extends JMenuBar {
          */
         private void loadFileInteraction(){
 
+            chooser.setExtension(".vec");
+
             // If the canvas is not empty, as user if they wish to save first.
             if (!canvas.getInstructions().isEmpty()){
 
-                int dialogResult = JOptionPane.showConfirmDialog (VecPainterMenuBar.this, "Would you like to save your work first?");
+                int dialogResult = JOptionPane.showConfirmDialog (null, "Would you like to save your work first?");
                 if (dialogResult == JOptionPane.OK_OPTION){
 
                     int resp = saveFileInteraction();
@@ -108,7 +115,7 @@ public class VecPainterMenuBar extends JMenuBar {
                 }
             }
 
-            int returnVal = chooser.showOpenDialog(VecPainterMenuBar.this);
+            int returnVal = chooser.showOpenDialog(null);
 
             if (returnVal==VecFileChooser.APPROVE_OPTION){
                 File file = chooser.getSelectedFile();
@@ -127,13 +134,16 @@ public class VecPainterMenuBar extends JMenuBar {
                 }
             }
         }
-        
+
         /**
          * Interaction which handles file saving.
          * @return
          */
         private int saveFileInteraction(){
-            int resp = chooser.showSaveDialog(VecPainterMenuBar.this);
+
+            chooser.setExtension(".vec");
+
+            int resp = chooser.showSaveDialog(null);
 
             if (resp==VecFileChooser.APPROVE_OPTION){
                 String path = chooser.getSelectedFile().getPath();
@@ -159,6 +169,33 @@ public class VecPainterMenuBar extends JMenuBar {
             return VecFileChooser.CANCEL_OPTION;
         }
 
+
+        /**
+         * Interaction to export file to png.
+         */
+        private void exportFileInteraction(){
+            chooser.setExtension(".png");
+            int resp = chooser.showSaveDialog(null);
+
+
+            if (resp == chooser.APPROVE_OPTION){
+                String path = chooser.getSelectedFile().getPath();
+
+                if (!path.endsWith(".png")){
+                    StringBuilder sb = new StringBuilder();
+                    sb.append(path);
+                    sb.append(".png");
+                    path = sb.toString();
+                }
+                try{
+                    canvas.saveCanvasToPng(path);
+                }
+                catch(Exception e){
+                    JOptionPane.showMessageDialog(null,String.format("Cannot save file: %s.\n%s",file.getName(),e.getMessage()),"Title",1);
+                }
+            }
+        }
+
         /**
          * Responds to events relating to menu selection.
          * @param e event object.
@@ -178,6 +215,10 @@ public class VecPainterMenuBar extends JMenuBar {
                 saveFileInteraction();
             }
 
+            if (source == exportFile){
+                exportFileInteraction();
+            }
+
             if (source == undo ){
                 canvas.undo();
                 canvas.repaint();
@@ -190,6 +231,12 @@ public class VecPainterMenuBar extends JMenuBar {
      */
     private class VecFileChooser extends JFileChooser{
 
+        private String extension = ".vec";
+
+        void setExtension(String extension){
+            this.extension=extension;
+        }
+
         VecFileChooser(){
             setFileFilter(new FileFilter() {
                 @Override
@@ -197,13 +244,13 @@ public class VecPainterMenuBar extends JMenuBar {
                     if (f.isDirectory()) return true;
                     else{
                         String name = f.getName().toLowerCase();
-                        return name.endsWith(".vec");
+                        return name.endsWith(extension);
                     }
                 }
 
                 @Override
                 public String getDescription() {
-                    return ".vec files";
+                    return String.format("%s files",extension);
                 }
             });
         }
