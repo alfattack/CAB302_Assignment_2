@@ -10,6 +10,10 @@ import java.awt.event.KeyEvent;
 public class KeyCommandListener extends KeyAdapter {
     private VecCanvas canvas = VecCanvas.getCanvas();
 
+    /**
+     * Event when a key is pressed.
+     * @param e
+     */
     @Override
     public void keyPressed(KeyEvent e) {
         System.out.println(e.getKeyCode());

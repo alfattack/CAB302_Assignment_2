@@ -5,24 +5,22 @@ import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
+/**
+ * The primary class for the graphical user interface. Implements Runnable to run on even dispatch thread.
+ */
 public class GUI extends JFrame implements Runnable{
-
-    /**
-     *
-     */
     public static final int WIDTH = 800;
     public static final int HEIGHT = 500;
 
     // Central Panel which holds canvas.
     private JPanel canvasPanel;
 
-    // Stores whether fill is selected
-    private boolean fill;
-    private Color fillColour;
-    private Color penColour;
 
-    public GUI() {
-        super("Vec Painter");
+    /**
+     * Creates the GUI - called inside Run function.
+     */
+    public void createGUI(){
+        setTitle("Vec Painter");
         setDefaultLookAndFeelDecorated(true);
         setSize(WIDTH, HEIGHT);
 
@@ -45,12 +43,12 @@ public class GUI extends JFrame implements Runnable{
             }
         });
         addKeyListener(new KeyCommandListener());
-        setFocusable(true);
+        setVisible(true);
     }
 
     /**
      * Creates Panel which houses the canvas.
-     * @return
+     * @return The panel containing the canvas.
      */
     private JPanel createCanvasPanel(){
         JPanel canvasPanel = new JPanel();
@@ -79,6 +77,8 @@ public class GUI extends JFrame implements Runnable{
         double canvasWidth = (double) canvasPanel.getWidth() * 0.95;
         double canvasHeight = (double) canvasPanel.getHeight() * 0.95;
 
+        System.out.println(canvasPanel.getWidth());
+
         if (canvasWidth > canvasHeight){
             canvasWidth=canvasHeight;
         }
@@ -94,10 +94,11 @@ public class GUI extends JFrame implements Runnable{
         javax.swing.SwingUtilities.invokeLater(new GUI());
     }
 
+    /**
+     * run method implemented to satisfy Runnable Interface. Calls createGUI to run on event dispatch thread.
+     */
     @Override
     public void run() {
-        GUI gui = new GUI();
-        gui.setVisible(true);
-        gui.resizeCanvas();
+        createGUI();
     }
 }

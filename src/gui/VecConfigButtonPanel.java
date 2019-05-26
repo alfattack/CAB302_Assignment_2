@@ -7,6 +7,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Button Panel relating to color selection for fill and pen.
+ */
 public class VecConfigButtonPanel extends JPanel implements ActionListener {
     private JButton color;
     private JButton fillColor;
@@ -19,6 +22,10 @@ public class VecConfigButtonPanel extends JPanel implements ActionListener {
     VecCanvas canvas;
 
 
+    /**
+     * Constructor of panel. VecDrawButtonPanel passed to update colour selections.
+     * @param drawButtonPanel
+     */
     public VecConfigButtonPanel(VecDrawButtonPanel drawButtonPanel){
 
         this.drawButtonPanel = drawButtonPanel;
@@ -42,7 +49,11 @@ public class VecConfigButtonPanel extends JPanel implements ActionListener {
     }
 
 
-
+    /**
+     * Creates a button using an ImageIcon
+     * @param icon
+     * @return
+     */
     private JButton createButton(ImageIcon icon){
         JButton var = new JButton(icon);
         var.setBackground(Color.WHITE);
@@ -51,6 +62,10 @@ public class VecConfigButtonPanel extends JPanel implements ActionListener {
     }
 
 
+    /**
+     * Button pressed event, updates colours for VecDrawButtonPanel.
+     * @param e event object.
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         Component source = (Component) e.getSource();

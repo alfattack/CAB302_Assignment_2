@@ -12,6 +12,9 @@ import graphicsManage.DrawableVector;
 import graphicsManage.VecFileManager;
 import graphicsManage.VecFileException;
 
+/**
+ * Menu bar which contains file and edit menus. Handles loading and saving commands, as well as undo and clear.
+ */
 public class VecPainterMenuBar extends JMenuBar {
 
     private JMenuItem loadFile;
@@ -24,6 +27,9 @@ public class VecPainterMenuBar extends JMenuBar {
     private VecFileChooser chooser;
     private MenuListener menuListener;
 
+    /**
+     * Constructs a menu bar with a file and edit menus.
+     */
     VecPainterMenuBar(){
 
         chooser = new VecFileChooser();
@@ -38,8 +44,8 @@ public class VecPainterMenuBar extends JMenuBar {
     }
 
     /**
-     *
-     * @return
+     * Creates file menu.
+     * @return menu for 'file'
      */
     JMenu createFileMenu(){
         JMenu var = new JMenu("File");
@@ -55,6 +61,10 @@ public class VecPainterMenuBar extends JMenuBar {
         return var;
     }
 
+    /**
+     * Creates edit menu.
+     * @return menu for 'edit'
+     */
     JMenu createEditMenu(){
         JMenu var = new JMenu("Edit");
         canvas = VecCanvas.getCanvas();
@@ -70,6 +80,9 @@ public class VecPainterMenuBar extends JMenuBar {
         return var;
     }
 
+    /**
+     * Private Listener class which implements ActionListener.
+     */
     private class MenuListener implements ActionListener {
 
         /**
@@ -148,8 +161,8 @@ public class VecPainterMenuBar extends JMenuBar {
         }
 
         /**
-         *
-         * @param e
+         * Responds to events relating to menu selection.
+         * @param e event object.
          */
         @Override
         public void actionPerformed(ActionEvent e) {

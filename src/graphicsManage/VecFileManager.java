@@ -8,16 +8,19 @@ import java.util.ArrayList;
 
 import static graphicsManage.VectorCommand.*;
 
+/**
+ * Handles reading and writing for .vec files
+ */
 public class VecFileManager {
 
     /**
      * Creates a Drawable vector based on a string of commands and coloring attributes.
-     * @param commandArgs
-     * @param fill
-     * @param color
-     * @param fillColor
-     * @return
-     * @throws VecFileException
+     * @param commandArgs String of commands in form <SHAPE> <COORDINATES>
+     * @param fill whether the fill setting is set
+     * @param color the current pen color
+     * @param fillColor the current fill color
+     * @return a Drawable vector object
+     * @throws VecFileException if the instructions are incorrect.
      */
     public static DrawableVector vecFromInstruction(String[] commandArgs, boolean fill, Color color, Color fillColor) throws VecFileException{
 
@@ -74,9 +77,9 @@ public class VecFileManager {
     }
 
     /**
-     *
-     * @param color
-     * @return
+     * Returns a a hex string representation of a color object in form #RRGGBB
+     * @param color string which represents hex values of RGB
+     * @return Color color object derived from hex.
      */
     public static Color getColorFromHex(String color) throws VecFileException{
         try{
@@ -96,9 +99,9 @@ public class VecFileManager {
     }
 
     /**
-     * Reads a .vec file and returns an ArrayList of DrawableVectors.
-     * @param path
-     * @return
+     * Reads a .vec file and returns an ArrayList of DrawableVectors based on instructions.
+     * @param path the path of the file to read from.
+     * @return a list of DrawableVector objects.
      * @throws FileNotFoundException
      */
     public static ArrayList<DrawableVector> readFromFile(String path) throws VecFileException {
@@ -157,7 +160,7 @@ public class VecFileManager {
 
     /**
      * Writes the current state of the canvas instructions to file.
-     * @param path
+     * @param path output path.
      */
     public static void writeToFile(String path) throws VecFileException{
         BufferedWriter file;

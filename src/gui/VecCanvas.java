@@ -13,11 +13,10 @@ import java.util.ArrayList;
 
 import static graphicsManage.VectorCommand.*;
 
-
+/**
+ * The GUI component for the drawing Canvas. Singleton design pattern for a shared instance across application.
+ */
 public class VecCanvas extends JPanel {
-    /**
-     * The GUI component for the drawing Canvas. Singleton design pattern for a shared instance across application.
-     */
 
     // Single canvas instance.
     private static VecCanvas instance;
@@ -40,7 +39,7 @@ public class VecCanvas extends JPanel {
     }
 
     /**
-     *
+     * Returns the one and only instance of the canvas. Follows singleton design pattern.
      * @return VecCanvas single instance.
      */
     public static VecCanvas getCanvas(){
@@ -50,20 +49,17 @@ public class VecCanvas extends JPanel {
     }
 
     /**
-     *
-     * @param draw
+     * Sets current instruction (instruction not yet completed - i.e. being manipulated via GUI.)
+     * @param draw DrawableVector of current instruction.
      */
     public void updateCurrentInstruction(DrawableVector draw){
         currentInstruction=draw;
     }
 
-    /**
-     *
-     */
-    public void cancelCurrentInstruction(){
-        currentInstruction=null;
-    }
 
+    /**
+     * Undo last committed instruction.
+     */
     public void undo(){
         int index_of_last_operation = instructions.size() - 1;
         if (index_of_last_operation >= 0){
@@ -71,36 +67,49 @@ public class VecCanvas extends JPanel {
         }
     }
 
+    /**
+     * clears ArrayList of instructions.
+     */
     public void clear(){
         instructions.clear();
         super.repaint();
     }
 
     /**
-     *
+     * Adds a drawable vector to the list of instructions.
      * @param draw
      */
     public void addComponent(DrawableVector draw) {
         instructions.add(draw);
     }
 
-
+    /**
+     * Sets instructions to predefined list of DrawableVectors.
+     * @param instructions
+     */
     public void setInstructions(ArrayList<DrawableVector> instructions){
         this.instructions=instructions;
     }
 
+    /**
+     * Returns all the instructions.
+     * @return ArrayList of all the instructions.
+     */
     public ArrayList<DrawableVector> getInstructions(){
         return instructions;
     }
 
-
+    /**
+     * returns current instruction.
+     * @return DrawableVector of current instruction.
+     */
     public DrawableVector getCurrentInstruction() {
         return currentInstruction;
     }
 
     /**
-     *
-     * @param g
+     * Paints the canvas using the draw method for all the DrawableVectors in contained instructions.
+     * @param g pass Graphics oject.
      */
     @Override
     public void paintComponent(Graphics g) {
@@ -156,7 +165,7 @@ public class VecCanvas extends JPanel {
         }
 
         /**
-         *
+         * mouse dragged event.
          * @param e
          */
         @Override
@@ -172,7 +181,7 @@ public class VecCanvas extends JPanel {
         }
 
         /**
-         *
+         * mouse released event.
          * @param e
          */
         @Override

@@ -11,6 +11,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Button panel for shapes that can be drawn.
+ */
 class VecDrawButtonPanel extends JPanel implements ActionListener{
 
     private VecCanvas canvas;
@@ -26,6 +29,9 @@ class VecDrawButtonPanel extends JPanel implements ActionListener{
     private Color fillColor = Color.BLACK;
     private Color color = Color.BLACK;
 
+    /**
+     * Constructor of panel. Create all the buttons with related icons.
+     */
     VecDrawButtonPanel(){
         setLayout(new FlowLayout());
         canvas = VecCanvas.getCanvas();
@@ -50,6 +56,11 @@ class VecDrawButtonPanel extends JPanel implements ActionListener{
         add(point);
     }
 
+    /**
+     * Creates button with icon.
+     * @param icon icon for button.
+     * @return button.
+     */
     private JButton createButton(ImageIcon icon){
         JButton var = new JButton(icon);
         var.setBackground(Color.WHITE);
@@ -57,23 +68,43 @@ class VecDrawButtonPanel extends JPanel implements ActionListener{
         return var;
     }
 
+    /**
+     * Sets the pen colour to be used for shape instructions.
+     * @param color color for pen to use.
+     */
     public void setPenColor(Color color){
         this.color=color;
     }
 
+    /**
+     * Gets the current pen colour used for shape instructions.
+     * @return current pen colour.
+     */
     public Color getPenColor(){
         return color;
     }
 
+    /**
+     * Gets the current fill colour used for shape instructions.
+     * @return current fill colour.
+     */
     public Color getFillColor() {
         return fillColor;
     }
 
+    /**
+     * Sets the fill colour to be used for shape instructions.
+     * @param color color for fill to use.
+     */
     public void setFillColor(Color color){
         this.fillColor = color;
     }
 
 
+    /**
+     * Action performed. Updates current instruction of canvas based on which button was pressed and colours in memory.
+     * @param e event object.
+     */
     public void actionPerformed(ActionEvent e) {
         Component source = (Component) e.getSource();
 
