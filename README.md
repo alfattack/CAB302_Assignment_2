@@ -4,4 +4,6 @@
 
 #### TO DO:
 * Final look over.
-* Fix bug with undo listener with focus changes.
+
+#### Maybe:
+* Fix odd behaviour with maximising then minimising window.
