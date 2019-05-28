@@ -136,7 +136,7 @@ public class VecPainterMenuBar extends JMenuBar {
         }
 
         /**
-         * Interaction which handles file saving.
+         * Interaction which handles file saving. Returns user interaction.
          * @return
          */
         private int saveFileInteraction(){
