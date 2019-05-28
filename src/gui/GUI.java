@@ -71,6 +71,8 @@ public class GUI extends JFrame implements Runnable{
      */
     private void resizeCanvas(){
         VecCanvas canvas = VecCanvas.getCanvas();
+        this.revalidate();
+        canvasPanel.revalidate();
 
         double canvasWidth = (double) canvasPanel.getWidth() * 0.95;
         double canvasHeight = (double) canvasPanel.getHeight() * 0.95;

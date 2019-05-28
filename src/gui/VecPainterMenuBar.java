@@ -177,7 +177,6 @@ public class VecPainterMenuBar extends JMenuBar {
             chooser.setExtension(".png");
             int resp = chooser.showSaveDialog(null);
 
-
             if (resp == chooser.APPROVE_OPTION){
                 String path = chooser.getSelectedFile().getPath();
 
