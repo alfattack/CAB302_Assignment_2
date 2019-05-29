@@ -211,7 +211,11 @@ public class VecFileManager {
             file.close();
 
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new VecFileException("IO Exception.");
+        }
+
+        catch (NullPointerException e){
+            throw new VecFileException("Is the file open somewhere else?");
         }
     }
 }
