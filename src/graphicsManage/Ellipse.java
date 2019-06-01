@@ -3,9 +3,9 @@ package graphicsManage;
 import java.awt.*;
 
 /**
- * Elipses shape.
+ * Ellipse shape.
  */
-public class Elipses extends FixedPointVector {
+public class Ellipse extends FixedPointVector {
 
     private Color fillColor = null;
     private boolean fill = false;
@@ -20,7 +20,7 @@ public class Elipses extends FixedPointVector {
      * @param color pen colour
      * @param fillColor fill colour
      */
-    public Elipses(double x1, double y1, double x2, double y2, boolean fill, Color color, Color fillColor){
+    public Ellipse(double x1, double y1, double x2, double y2, boolean fill, Color color, Color fillColor){
         super(x1,y1,x2,y2,color);
         this.fill=fill;
         this.fillColor=fillColor;
@@ -32,14 +32,14 @@ public class Elipses extends FixedPointVector {
      * @param fillColor fill colour
      * @param fill whether to fill when drawn.
      */
-    public Elipses(Color color, Color fillColor, boolean fill) {
+    public Ellipse(Color color, Color fillColor, boolean fill) {
         super.color = color;
         this.fillColor = fillColor;
         this.fill = fill;
     }
 
     /**
-     * Draws Elipses with absolute coordinates based on current size of canvas.
+     * Draws Ellipse with absolute coordinates based on current size of canvas.
      * @param g passed Graphics object.
      * @param width width of canvas.
      * @param height height of canvas.
@@ -67,7 +67,7 @@ public class Elipses extends FixedPointVector {
      */
     @Override
     public VectorCommand getCommand() {
-        return VectorCommand.ELIPSES;
+        return VectorCommand.ELLIPSE;
     }
 
     /**
@@ -76,7 +76,7 @@ public class Elipses extends FixedPointVector {
      */
     @Override
     public DrawableVector returnCopy() {
-        return new Elipses(super.color, fillColor, this.fill);
+        return new Ellipse(super.color, fillColor, this.fill);
     }
 
     /**

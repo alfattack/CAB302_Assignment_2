@@ -6,7 +6,7 @@ package graphicsManage;
 public enum VectorCommand {
     LINE,
     RECTANGLE,
-    ELIPSES,
+    ELLIPSE,
     PLOT,
     POLYGON,
     FILL,

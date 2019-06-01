@@ -1,7 +1,7 @@
 package gui;
 
 import graphicsManage.DrawableVector;
-import graphicsManage.Elipses;
+import graphicsManage.Ellipse;
 import graphicsManage.Point;
 import graphicsManage.Rectangle;
 import org.junit.jupiter.api.BeforeEach;
@@ -45,7 +45,7 @@ class VecCanvasTest {
     @Test
     void clear() {
         canvas.addComponent(new Rectangle(0.5,0.5,0.1,0.6,true,Color.RED,Color.BLUE));
-        canvas.addComponent(new Elipses(0.5,0.5,0.1,0.6,true,Color.RED,Color.BLUE));
+        canvas.addComponent(new Ellipse(0.5,0.5,0.1,0.6,true,Color.RED,Color.BLUE));
         canvas.addComponent(new Point(0.5, 0.5, Color.RED));
         canvas.clear();
         assertEquals(0,canvas.getInstructions().size());
@@ -54,7 +54,7 @@ class VecCanvasTest {
     @Test
     void addComponent() {
         canvas.addComponent(new Rectangle(0.5,0.5,0.1,0.6,true,Color.RED,Color.BLUE));
-        canvas.addComponent(new Elipses(0.5,0.5,0.1,0.6,true,Color.RED,Color.BLUE));
+        canvas.addComponent(new Ellipse(0.5,0.5,0.1,0.6,true,Color.RED,Color.BLUE));
         canvas.addComponent(new Point(0.5, 0.5, Color.RED));
         assertEquals(3,canvas.getInstructions().size());
     }
@@ -63,7 +63,7 @@ class VecCanvasTest {
     void setInstructions() {
         ArrayList<DrawableVector> instructions = new ArrayList<>();
         instructions.add(new Rectangle(0.5,0.5,0.1,0.6,true,Color.RED,Color.BLUE));
-        instructions.add(new Elipses(0.5,0.5,0.1,0.6,true,Color.RED,Color.BLUE));
+        instructions.add(new Ellipse(0.5,0.5,0.1,0.6,true,Color.RED,Color.BLUE));
         instructions.add(new Point(0.5, 0.5, Color.RED));
         canvas.setInstructions(instructions);
         assertEquals(instructions,canvas.getInstructions());

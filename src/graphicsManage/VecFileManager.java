@@ -61,8 +61,8 @@ public class VecFileManager {
             case RECTANGLE:
                 shape = new Rectangle(xcords.get(0).doubleValue(),ycords.get(0).doubleValue(),xcords.get(1).doubleValue(),ycords.get(1).doubleValue(), fill, color, fillColor);
                 break;
-            case ELIPSES:
-                shape = new Elipses(xcords.get(0).doubleValue(),ycords.get(0).doubleValue(),xcords.get(1).doubleValue(),ycords.get(1).doubleValue(), fill, color, fillColor);
+            case ELLIPSE:
+                shape = new Ellipse(xcords.get(0).doubleValue(),ycords.get(0).doubleValue(),xcords.get(1).doubleValue(),ycords.get(1).doubleValue(), fill, color, fillColor);
                 break;
             case PLOT:
                 shape = new Point(xcords.get(0).doubleValue(), ycords.get(0), color);

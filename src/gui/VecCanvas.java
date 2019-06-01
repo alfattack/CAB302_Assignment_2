@@ -228,7 +228,7 @@ public class VecCanvas extends JPanel {
 
             VectorCommand cmd = currentInstruction.getCommand();
 
-            if ((cmd==RECTANGLE)||(cmd==ELIPSES)||(cmd==LINE)){
+            if ((cmd==RECTANGLE)||(cmd== ELLIPSE)||(cmd==LINE)){
                 ((FixedPointVector)currentInstruction).setCoordinates(click_x,click_y,e.getX(),e.getY(),getWidth(),getHeight());
                 instance.repaint();
             }

@@ -1,7 +1,7 @@
 package gui;
 
-import graphicsManage.Elipses;
-import graphicsManage.Line;
+import graphicsManage.*;
+import graphicsManage.Ellipse;
 import graphicsManage.Point;
 import graphicsManage.Polygon;
 import graphicsManage.Rectangle;
@@ -115,10 +115,10 @@ class VecCommandButtonPanel extends JPanel implements ActionListener{
             canvas.updateCurrentInstruction(new Rectangle(color, fillColor, true));
         }
         if (source == elipses){
-            canvas.updateCurrentInstruction(new Elipses(color, fillColor,false));
+            canvas.updateCurrentInstruction(new Ellipse(color, fillColor,false));
         }
         if (source == elipsesFill){
-            canvas.updateCurrentInstruction(new Elipses(color, fillColor,true));
+            canvas.updateCurrentInstruction(new Ellipse(color, fillColor,true));
         }
         if (source == line){
             canvas.updateCurrentInstruction(new Line(color));
