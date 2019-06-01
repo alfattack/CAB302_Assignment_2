@@ -95,7 +95,7 @@ public class Line extends FixedPointVector {
      */
     @Override
     public DrawableVector returnCopy() {
-        return new Line(this.x1,this.y1,this.x2,this.y2,color);
+        return new Line(color);
     }
 
     /**
